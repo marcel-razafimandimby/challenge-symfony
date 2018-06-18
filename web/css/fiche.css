@@ -1,0 +1,12 @@
+body{
+	text-align: left;
+}
+input{background-color: #999!important; border-color: #999;}
+.btn{background-color: #fff!important; border-color:#fff!important; }
+.btn-primary{color: #333;}
+.btn-primary:hover{color: #000;}
+h1{font-size: 18px;}
+h2{font-size: 16px;}
+h3{font-size: 14px; margin-top: 0;}
+.qttPanier{width: 98px;height: 25px;}
+.sousTotal{font-size: 18px; font-weight: bold;}

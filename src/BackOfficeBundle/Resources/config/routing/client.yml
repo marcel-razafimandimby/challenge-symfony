@@ -1,0 +1,24 @@
+backoffice_client_index:
+    path:     /
+    defaults: { _controller: "BackOfficeBundle:Client:index" }
+    methods:  GET
+
+backoffice_client_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackOfficeBundle:Client:show" }
+    methods:  GET
+
+backoffice_client_new:
+    path:     /new
+    defaults: { _controller: "BackOfficeBundle:Client:new" }
+    methods:  [GET, POST]
+
+backoffice_client_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackOfficeBundle:Client:edit" }
+    methods:  [GET, POST]
+
+backoffice_client_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackOfficeBundle:Client:deleteElement" }
+    methods:  [POST, DELETE,GET]

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block title %}Confirmation commande - Lunette - Bocasay{% endblock %}
+{% block stylesheets %}
+	<link href="{{ asset('css/index.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/fiche.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+	
+
+          <div class="inner cover">
+          	
+            <h1 class="cover-heading text-left">Confirmation commande</h1>
+            <ul class="list-unstyled">
+              {% for key, messages in app.session.flashbag.all() %}
+                  <li class="alert {% if key == 'error'%}alert-danger{%else%}alert-success{% endif %}">
+                      {% for message in messages %}
+                          {%if key == 'error'%}<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span>{% else %}<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;{% endif%} {{ message }}
+                      {% endfor %}
+                  </li>
+              {% endfor %}
+              </ul>
+            <div class="inner row">
+            	<h2>Nos Produits</h2>
+            	<hr/>
+            	{% if produits %}
+                        {% for produit in produits %}
+                    <div class="col-md-6">
+                      <h3><a href="{{ path('main_fichepage',{'id':produit.id})}}">{{ produit.titre }}</a></h3>
+                      <div class="descLunette">
+                                    {{ produit.description|raw }}
+                      </div>
+                      <p class="text-right price">{{ produit.prixTtc }}€</p>
+                      <div class="row">
+                        <div class="col-xs-6 text-left"><a href="#" class="btn btn-sm btn-default">Ajouter Panier</a></div>
+                        <div class="col-xs-6 text-right"><a href="{{ path('main_fichepage',{'id':produit.id})}}" class="btn btn-sm btn-default">Commander</a></div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                  {% endif %}
+            	
+            </div>
+            
+          </div>
+
+          
+{% endblock %}

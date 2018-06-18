@@ -1,0 +1,21 @@
+{% extends 'base.backoffice.html.twig' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% block body %}
+        <div class="row">
+                <h1>Nouveau Client</h1>
+                {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <input type="submit" value="Valider" class="btn btn-primary" />
+                            
+                        </div>
+                    </div>
+                    
+
+                {{ form_end(form) }}
+            
+        </div>
+
+    
+{% endblock %}

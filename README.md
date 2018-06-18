@@ -1,2 +1,4 @@
-# challenge-symfony
-Un vendeur de lunette veut développer une application pour gérer ces produits
+challenge
+=========
+
+A Symfony project created on June 14, 2018, 4:56 pm.

@@ -1,0 +1,29 @@
+backoffice_commande_index:
+    path:     /
+    defaults: { _controller: "BackOfficeBundle:Commande:index" }
+    methods:  GET
+
+backoffice_commande_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackOfficeBundle:Commande:show" }
+    methods:  GET
+
+backoffice_commande_new:
+    path:     /new
+    defaults: { _controller: "BackOfficeBundle:Commande:new" }
+    methods:  [GET, POST]
+
+backoffice_commande_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackOfficeBundle:Commande:edit" }
+    methods:  [GET, POST]
+
+backoffice_commande_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackOfficeBundle:Commande:delete" }
+    methods:  DELETE
+#details commande par produit
+backoffice_commande_details:
+    path:     /detail/{id}
+    defaults: { _controller: "BackOfficeBundle:Commande:detail" }
+    methods:  GET

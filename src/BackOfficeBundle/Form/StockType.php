@@ -1,0 +1,42 @@
+<?php
+
+namespace BackOfficeBundle\Form;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class StockType extends AbstractType
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('produit',null,array(
+            'label'=>'Produit : '
+        ))
+        ->add('qtt',null,array(
+            'label'=>'Qtt : '
+        ))
+        ;
+    }/**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'BackOfficeBundle\Entity\Stock'
+        ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'backofficebundle_stock';
+    }
+
+
+}

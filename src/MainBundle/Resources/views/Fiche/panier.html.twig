@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% block title %}Mon panier - Lunettes - Bocasay{% endblock %}
+{% block stylesheets %}
+	<link href="{{ asset('css/index.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/fiche.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+	
+
+          <div class="inner cover">
+          	
+            <h1 class="cover-heading text-left">Mon Panier</h1>
+            {{ form_start(form,{'attr':{'action':path('main_validerCommandepage')}}) }}
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Produit pour achat</th>
+                    <th>Quantité</th>
+                    <th>Prix total</th>
+                    <th>&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% set totalPanier = 0 %}
+                  {% if produitPanier %}
+                    {% for un_panier in produitPanier %}
+                      {% set qttPanier = 1 %}
+                      {% if tabIdsQtt[un_panier.id] is defined %}
+                        {% set qttPanier = tabIdsQtt[un_panier.id] %}
+                      {% endif %}
+                      {% set totalPanier = totalPanier + (un_panier.prixTtc*qttPanier) %}
+                  <tr>
+                    <input type="hidden" name="id[]" value="{{ un_panier.id }}">
+                    <input type="hidden" name="prixVente[]" value="{{ un_panier.prixTtc*qttPanier }}">
+                    <input type="hidden" name="prixUnitaire[]" value="{{ un_panier.prixTtc }}">
+                    <input type="hidden" name="prixUnitaire_{{ un_panier.id }}" id="prixUnitaire_{{ un_panier.id }}" value="{{ un_panier.prixTtc }}">
+                    <td>{{ un_panier.titre }}</td>
+                    <td><input class="form-control qttPanier" type="number" id="qtt_{{ un_panier.id }}" name="qtt[]" value="{{ qttPanier }}" onchange="addQtt({{ un_panier.id }},{{ qttPanier }},{{ totalPanier }},{{ un_panier.prixTtc }});"></td>
+                    <td class="price_{{ un_panier.id }}">{{ un_panier.prixTtc*qttPanier }}€</td>
+                    <td><a href="{{ path('main_panierpage')}}?id={{un_panier.id}}&delete=1&qtt=1" onclick="return checkDelete();"><span class="glyphicon glyphicon-remove"></span> Supprimer</a></td>
+                  </tr>
+                    {% endfor %}
+                  {% endif %}
+                  
+                  <tr class="sousTotal">
+                    <input type="hidden" name="totalPanier" id="totalPanier" value="{{ totalPanier }}">
+                    <td>&nbsp;</td>
+                    <td>Total</td>
+                    <td class="sousTotalPanier">{{ totalPanier }}€</td>
+                    <td>&nbsp;</td>
+                  </tr>
+                </tbody>
+
+              </table>
+            
+            <div class="inner row">
+            	<h2>Remplir votre Information</h2>
+            	<hr/>
+            	
+                
+                    {{ form_widget(form) }}
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <input type="submit" id="btnValider" value="Valider votre commande" {% if totalPanier == 0 %} disabled="disabled" {% endif %}class="btn btn-primary" />
+                            
+                        </div>
+                    </div>
+                    
+
+                
+            	
+            </div>
+            {{ form_end(form) }}
+          </div>
+
+  {% block javascript %}
+  {{ parent()}}
+  <script type="text/javascript">
+  function checkDelete() {
+     if(confirm('Voulez-vous vraiement le supprimer?')){
+          return true;
+      }else{
+          return false;
+      }
+  }
+  function addQtt(id,qttOriginale,prixTotale,prixUnitaire) {
+    var qtt = document.getElementById("qtt_"+id).value;
+    $(".price_"+id).html((qtt*prixUnitaire)+"€");
+    var Total = 0;
+    $('input[name^="id"]').each(function() {
+        var qttU = $('#qtt_'+$(this).val()).val();
+        var pTtc = $('#prixUnitaire_'+$(this).val()).val();
+        Total = Total + (qttU*pTtc);
+        //alert($(this).val());
+    });
+    $(".sousTotalPanier").html(Total+"€");
+    if(Total>0){
+      $('#btnValider').prop('disabled', false);
+    }else
+       $('#btnValider').prop('disabled', true);
+    
+}
+  </script>  
+{% endblock %}       
+{% endblock %}

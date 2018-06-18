@@ -1,0 +1,24 @@
+backoffice_marqueproduit_index:
+    path:     /
+    defaults: { _controller: "BackOfficeBundle:MarqueProduit:index" }
+    methods:  GET
+
+backoffice_marqueproduit_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackOfficeBundle:MarqueProduit:show" }
+    methods:  GET
+
+backoffice_marqueproduit_new:
+    path:     /new
+    defaults: { _controller: "BackOfficeBundle:MarqueProduit:new" }
+    methods:  [GET, POST]
+
+backoffice_marqueproduit_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackOfficeBundle:MarqueProduit:edit" }
+    methods:  [GET, POST]
+
+backoffice_marqueproduit_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackOfficeBundle:MarqueProduit:deleteElement" }
+    methods:  [POST, DELETE,GET]

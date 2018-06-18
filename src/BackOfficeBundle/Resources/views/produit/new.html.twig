@@ -1,0 +1,26 @@
+{% extends 'base.backoffice.html.twig' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% block body %}
+    <div class="row">
+    <h1>Nouveau Produit</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" value="Valider" class="btn btn-primary" />
+                
+            </div>
+        </div>
+    {{ form_end(form) }}
+    <ul class="list-unstyled action">
+        <li>
+            <a href="{{ path('backoffice_fournisseur_new') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajout Fournisseur</a>
+        </li>
+        <li>
+            <a href="{{ path('backoffice_marqueproduit_new') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajout Marque Produit</a>
+        </li>
+    </ul>
+    
+</div>
+{% endblock %}

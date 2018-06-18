@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block title %}Accueil - Lunettes - Bocasay!{% endblock %}
+{% block stylesheets %}
+	<link href="{{ asset('css/index.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+
+
+          <div class="inner cover">
+          	
+            <h1 class="cover-heading">Bienvenue</h1>
+            <img src="{{ asset('images/slide-lunette.jpg')}}" class="img-responsive">
+            <p class="lead intro">Les lunettes sont un instrument permettant de pallier les défauts visuels. Une paire de lunettes est constituée d'une monture sur laquelle sont fixés des verres correcteurs et reposant sur le nez.</p>
+
+            <div class="row products">
+            	<h2>Nos dernieres produits</h2>
+            	<hr/>
+                  {% if produits %}
+                        {% for produit in produits %}
+                  	<div class="col-md-6">
+                  		<h3 class="text-left"><a href="{{ path('main_fichepage',{'id':produit.id})}}"><strong>{{ produit.titre }}</strong></a></h3>
+                  		<div class="descLunette text-left">
+                                    {{ produit.description|truncate(150, true)|raw }}
+                  		</div>
+                  		<p class="text-right price">{{ produit.prixTtc }}€</p>
+                  		<div class="row">
+                  			<div class="col-xs-6 text-left"><a href="{{ path('main_panierpage')}}?id={{ produit.id }}&qtt=1" class="btn btn-sm btn-default">Ajouter Panier</a></div>
+                  			<div class="col-xs-6 text-right"><a href="{{ path('main_fichepage',{'id':produit.id})}}" class="btn btn-sm btn-default">Commander</a></div>
+                  		</div>
+                  	</div>
+                  {% endfor %}
+                  {% endif %}
+            	
+            </div>
+            
+          </div>
+
+          
+	
+
+          
+{% endblock %}

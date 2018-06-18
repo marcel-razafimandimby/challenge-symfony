@@ -1,0 +1,24 @@
+backoffice_entreeproduit_index:
+    path:     /
+    defaults: { _controller: "BackOfficeBundle:EntreeProduit:index" }
+    methods:  GET
+
+backoffice_entreeproduit_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackOfficeBundle:EntreeProduit:show" }
+    methods:  GET
+
+backoffice_entreeproduit_new:
+    path:     /new
+    defaults: { _controller: "BackOfficeBundle:EntreeProduit:new" }
+    methods:  [GET, POST]
+
+backoffice_entreeproduit_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackOfficeBundle:EntreeProduit:edit" }
+    methods:  [GET, POST]
+
+backoffice_entreeproduit_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackOfficeBundle:EntreeProduit:deleteElement" }
+    methods:  [POST, DELETE,GET]

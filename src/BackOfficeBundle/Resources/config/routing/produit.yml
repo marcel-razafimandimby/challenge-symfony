@@ -1,0 +1,24 @@
+backoffice_produit_index:
+    path:     /
+    defaults: { _controller: "BackOfficeBundle:Produit:index" }
+    methods:  GET
+
+backoffice_produit_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackOfficeBundle:Produit:show" }
+    methods:  GET
+
+backoffice_produit_new:
+    path:     /new
+    defaults: { _controller: "BackOfficeBundle:Produit:new" }
+    methods:  [GET, POST]
+
+backoffice_produit_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackOfficeBundle:Produit:edit" }
+    methods:  [GET, POST]
+
+backoffice_produit_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackOfficeBundle:Produit:deleteElement" }
+    methods:  [POST, DELETE,GET]

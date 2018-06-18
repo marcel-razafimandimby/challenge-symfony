@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ produit.titre }} - Lunette - Bocasay{% endblock %}
+{% block stylesheets %}
+	<link href="{{ asset('css/index.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/fiche.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+	
+
+          <div class="inner cover">
+          	
+            <h1 class="cover-heading text-left">{{ produit.titre }}</h1>
+            
+            <p class="lead text-left">{{ produit.description|raw }}</p>
+            <h3>Détail produit :</h3>
+            <ul>
+              <li><strong>Marque </strong>: {{ produit.marque.marque }}</li>
+              <li><strong>Genre </strong>: {{ produit.genre }}</li>
+              <li><strong>Type </strong>: {{ produit.type }}</li>
+              <li class="qtt"><strong>Qtt </strong>: <input class="form-control" type="number" id="qttOg" onchange="addQtt();" name="qtt" value="1"></li>
+              <li><strong>Prix unitaire  </strong>: {{ produit.prixTtc }}€</li>
+            </ul>
+            
+            <div class="row">
+                  <form action="{{ path('main_panierpage')}}" method="GET" name="addPanier">
+                    <input type="hidden" name="id" value="{{ produit.id }}">
+                    <input type="hidden" name="qtt" value="1" id="qtt">
+                  <div class="col-xs-6 text-center">
+                    <input type="submit" name="commander" class="btn btn-sm btn-default" value="Ajouter Panier">
+                    </div>
+                </form>
+                  <form action="{{ path('main_inscriptionpage',{'id':produit.id})}}" method="POST" name="cmdProduct">
+                    <input type="hidden" name="titre" value="{{ produit.titre }}">
+                    <input type="hidden" name="id" value="{{ produit.id }}">
+                    <input type="hidden" name="prixTtc" value="{{ produit.prixTtc }}">
+                    <input type="hidden" name="qttCmde" value="1" id="qttCmde">
+                    <div class="col-xs-6 text-center"><input type="submit" name="commander" class="btn btn-sm btn-default" value="Commander"></div>
+                  </form>
+                </div>
+            </form>
+            <div class="inner row">
+            	<h2>Nos Autres Produits</h2>
+            	<hr/>
+            	{% if autresProduits %}
+                        {% for un_produit in autresProduits %}
+                    <div class="col-md-6">
+                        <h3><a href="{{ path('main_fichepage',{'id':un_produit.id})}}"><strong>{{ un_produit.titre }}</strong></a></h3>
+                        <div class="descLunette">
+                            {{ un_produit.description|raw }}
+                        </div>
+                        <p class="text-right price">{{ un_produit.prixTtc }}€</p>
+                        <div class="row">
+                            <div class="col-xs-6 text-left"><a href="#" class="btn btn-sm btn-default">Ajouter Panier</a></div>
+                            <div class="col-xs-6 text-right"><a href="{{ path('main_fichepage',{'id':un_produit.id})}}" class="btn btn-sm btn-default">Commander</a></div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                  {% endif %}
+            	
+            </div>
+            
+          </div>
+
+{% block javascript %}
+  {{ parent()}}
+<script type="text/javascript">
+function addQtt() {
+    var qtt = document.getElementById("qttOg").value;
+    $('#qtt').val(qtt);
+    $('#qttCmde').val(qtt);
+    
+    
+}
+</script>  
+{% endblock %}        
+{% endblock %}

@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: lunettesBdd
+    database_user: root
+    database_password: null
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: marcel.razafimandimby@gmail.com
+    mailer_password: m-marc
+    secret: e6885c5a0a7498c19657669d6d297e3e064f4afc

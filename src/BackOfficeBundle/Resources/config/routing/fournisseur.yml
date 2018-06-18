@@ -1,0 +1,24 @@
+backoffice_fournisseur_index:
+    path:     /
+    defaults: { _controller: "BackOfficeBundle:Fournisseur:index" }
+    methods:  GET
+
+backoffice_fournisseur_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackOfficeBundle:Fournisseur:show" }
+    methods:  GET
+
+backoffice_fournisseur_new:
+    path:     /new
+    defaults: { _controller: "BackOfficeBundle:Fournisseur:new" }
+    methods:  [GET, POST]
+
+backoffice_fournisseur_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackOfficeBundle:Fournisseur:edit" }
+    methods:  [GET, POST]
+
+backoffice_fournisseur_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackOfficeBundle:Fournisseur:deleteElement" }
+    methods:  [POST, DELETE,GET]

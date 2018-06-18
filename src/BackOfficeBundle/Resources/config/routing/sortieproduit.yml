@@ -1,0 +1,24 @@
+backoffice_sortieproduit_index:
+    path:     /
+    defaults: { _controller: "BackOfficeBundle:SortieProduit:index" }
+    methods:  GET
+
+backoffice_sortieproduit_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackOfficeBundle:SortieProduit:show" }
+    methods:  GET
+
+backoffice_sortieproduit_new:
+    path:     /new
+    defaults: { _controller: "BackOfficeBundle:SortieProduit:new" }
+    methods:  [GET, POST]
+
+backoffice_sortieproduit_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackOfficeBundle:SortieProduit:edit" }
+    methods:  [GET, POST]
+
+backoffice_sortieproduit_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackOfficeBundle:SortieProduit:deleteElement" }
+    methods:  [POST, DELETE,GET]

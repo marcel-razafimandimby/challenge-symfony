@@ -1,0 +1,24 @@
+backoffice_stock_index:
+    path:     /
+    defaults: { _controller: "BackOfficeBundle:Stock:index" }
+    methods:  GET
+
+backoffice_stock_show:
+    path:     /{id}/show
+    defaults: { _controller: "BackOfficeBundle:Stock:show" }
+    methods:  GET
+
+backoffice_stock_new:
+    path:     /new
+    defaults: { _controller: "BackOfficeBundle:Stock:new" }
+    methods:  [GET, POST]
+
+backoffice_stock_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BackOfficeBundle:Stock:edit" }
+    methods:  [GET, POST]
+
+backoffice_stock_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BackOfficeBundle:Stock:deleteElement" }
+    methods:  [POST, DELETE,GET]

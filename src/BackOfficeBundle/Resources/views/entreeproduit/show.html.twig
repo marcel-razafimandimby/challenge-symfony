@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Entreeproduit</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entreeProduit.id }}</td>
+            </tr>
+            <tr>
+                <th>Qtt</th>
+                <td>{{ entreeProduit.qtt }}</td>
+            </tr>
+            <tr>
+                <th>Prixentree</th>
+                <td>{{ entreeProduit.prixEntree }}</td>
+            </tr>
+            <tr>
+                <th>Dateentree</th>
+                <td>{% if entreeProduit.dateEntree %}{{ entreeProduit.dateEntree|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('backoffice_entreeproduit_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('backoffice_entreeproduit_edit', { 'id': entreeProduit.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,23 @@
+main_homepage:
+    path:     /
+    defaults: { _controller: MainBundle:Index:index }
+
+#fiche lunette
+main_fichepage:
+    path:     /lunette/{id}/fiche.html
+    defaults: { _controller: MainBundle:Fiche:fiche }
+
+#inscription client
+main_inscriptionpage:
+    path:     /lunette/{id}/inscription.html
+    defaults: { _controller: MainBundle:Fiche:inscription }
+
+#mon panier
+main_panierpage:
+    path:     /lunette/mon-panier.html
+    defaults: { _controller: MainBundle:Fiche:panier }
+
+#valider commande
+main_validerCommandepage:
+    path:     /lunette/valider-commande.html
+    defaults: { _controller: MainBundle:Fiche:validerCommande }

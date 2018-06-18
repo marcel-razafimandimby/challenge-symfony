@@ -1,0 +1,48 @@
+#route formulaire gestion client
+back_office_backoffice_client:
+    resource: "@BackOfficeBundle/Resources/config/routing/client.yml"
+    prefix:   /backoffice/client
+
+#route formulaire gestion fournisseur
+back_office_backoffice_fournisseur:
+    resource: "@BackOfficeBundle/Resources/config/routing/fournisseur.yml"
+    prefix:   /backoffice/fournisseur
+
+#route formulaire gestion marque produit fournisseur
+back_office_backoffice_marqueproduit:
+    resource: "@BackOfficeBundle/Resources/config/routing/marqueproduit.yml"
+    prefix:   /backoffice/marqueproduit
+
+#route formulaire gestion produit
+back_office_backoffice_produit:
+    resource: "@BackOfficeBundle/Resources/config/routing/produit.yml"
+    prefix:   /backoffice/produit
+
+#route formulaire gestion commande
+back_office_backoffice_commande:
+    resource: "@BackOfficeBundle/Resources/config/routing/commande.yml"
+    prefix:   /backoffice/commande
+
+#route formulaire gestion entree produit
+back_office_backoffice_entreeproduit:
+    resource: "@BackOfficeBundle/Resources/config/routing/entreeproduit.yml"
+    prefix:   /backoffice/entreeproduit
+
+#route formulaire gestion sortie produit
+back_office_backoffice_sortieproduit:
+    resource: "@BackOfficeBundle/Resources/config/routing/sortieproduit.yml"
+    prefix:   /backoffice/sortieproduit
+
+#route home page backOffice
+back_office_homepage:
+    path:     /backoffice
+    defaults: { _controller: BackOfficeBundle:Default:index }
+
+back_office_backoffice_lignecommande:
+    resource: "@BackOfficeBundle/Resources/config/routing/lignecommande.yml"
+    prefix:   /backoffice/lignecommande
+
+#stock
+back_office_backoffice_stock:
+    resource: "@BackOfficeBundle/Resources/config/routing/stock.yml"
+    prefix:   /backoffice/stock

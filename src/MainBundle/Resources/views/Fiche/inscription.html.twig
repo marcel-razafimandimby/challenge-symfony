@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% block title %}{{ produit.titre }} - Inscription - Bocasay!{% endblock %}
+{% block stylesheets %}
+	<link href="{{ asset('css/index.css') }}" rel="stylesheet">
+  <link href="{{ asset('css/fiche.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+	
+
+          <div class="inner cover">
+          	
+            <h1 class="cover-heading text-left">Votre Commande :</h1>
+            <hr>
+            <h2 class="text-left">{{ produit.titre }}</h2>
+            <p class="lead text-left">{{ produit.description|raw }}</p>
+            <h3>Détail produit :</h3>
+            <ul>
+              <li><strong>Marque </strong>: {{ produit.marque.marque }}</li>
+              <li><strong>Genre </strong>: {{ produit.genre }}</li>
+              <li><strong>Type </strong>: {{ produit.type }}</li>
+              <li><strong>Qtt </strong>: {{ qtt }}</li>
+              <li><strong>Prix Total </strong>: {{ produit.prixTtc*qtt }}€</li>
+            </ul>
+            
+            <p class="text-right"><a href="javascript:window.history.back();">  « Prècedente</a></p>
+
+            <div class="inner row">
+            	<h2>Remplir votre Informations</h2>
+            	<hr/>
+
+              {{ form_start(form,{'attr':{'action':path('main_validerCommandepage')}}) }}
+                <input type="hidden" name="titre" value="{{ produit.titre }}">
+                <input type="hidden" name="id" value="{{ produit.id }}">
+                <input type="hidden" name="qttProduit" value="{{ qtt }}">
+                <input type="hidden" name="prixTtc" value="{{ produit.prixTtc*qtt }}">
+                    {{ form_widget(form) }}
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <input type="submit" value="Valider votre commande" class="btn btn-primary" />
+                            
+                        </div>
+                    </div>
+                    
+
+                {{ form_end(form) }}
+
+            	
+            	
+            </div>
+            <div class="inner row">
+              <h2>Nos Autres Produits</h2>
+              <hr/>
+              {% if autresProduits %}
+                        {% for un_produit in autresProduits %}
+                    <div class="col-md-6">
+                        <h3><a href="{{ path('main_fichepage',{'id':un_produit.id})}}">{{ un_produit.titre }}</a></h3>
+                        <div class="descLunette">
+                            {{ un_produit.description|raw }}
+                        </div>
+                        <p class="text-right price">{{ un_produit.prixTtc }}€</p>
+                        <div class="row">
+                            <div class="col-xs-6 text-left"><a href="{{ path('main_panierpage')}}?id={{ produit.id }}&qtt=1" class="btn btn-sm btn-default">Ajouter Panier</a></div>
+                            <div class="col-xs-6 text-right"><a href="{{ path('main_fichepage',{'id':un_produit.id})}}" class="btn btn-sm btn-default">Commander</a></div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                  {% endif %}
+              
+            </div>
+            
+          </div>
+
+          
+{% endblock %}

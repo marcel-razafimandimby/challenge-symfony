@@ -1,0 +1,43 @@
+{% extends 'base.backoffice.html.twig' %}
+
+{% block body %}
+    <div class="row">
+    <h1>Liste commandes</h1>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Numero commande</th>
+                <th>Date</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>email</th>
+                <th>Adresse</th>
+                <th>Total TTC</th>
+                <th>Etat</th>
+                
+                <!--th>Actions</th-->
+            </tr>
+        </thead>
+        <tbody>
+        {% for commande in commandes %}
+            <tr>
+                <td><a href="{{ path('backoffice_commande_details',{'id':commande.id })}}">{{ commande.numeroCmde }}</a></td>
+                <td>{{ commande.dateCommande|date('Y-m-d H:i:s') }}</td>
+                <td>{{ commande.client.nom }}</td>
+                <td>{{ commande.client.prenom }}</td>
+                <td>{{ commande.client.email }}</td>
+                <td>{{ commande.client.adresse }}</td>
+                <td>{% if tabTotal[commande.numeroCmde] is defined %} {{ tabTotal[commande.numeroCmde] }}€ {% endif %}</td>
+                <td>{% if commande.etat %}<span class="glyphicon glyphicon-ok"></span>{% else %}<span class="glyphicon glyphicon-remove" style="color:red;"></span>{% endif %}</td>
+                
+                
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  </div>
+  {% block javascripts %}
+    {{ parent() }}
+{% endblock %}
+{% endblock %}
