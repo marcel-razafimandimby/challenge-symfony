@@ -36,7 +36,7 @@ class LigneCommande
     private $prixVente;
 
     /**
-    * @ORM\ManyToOne(targetEntity="BackOfficeBundle\Entity\Commande")
+    * @ORM\ManyToOne(targetEntity="BackOfficeBundle\Entity\Commande",cascade={"remove"})
     * @ORM\JoinColumn(name="id_commande")
     */
     private $commande;

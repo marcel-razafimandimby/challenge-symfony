@@ -42,6 +42,12 @@ class EntreeProduit
      */
     private $dateEntree;
 
+    /**
+    * @ORM\ManyToOne(targetEntity="BackOfficeBundle\Entity\Produit")
+    * @ORM\JoinColumn(name="id_produit")
+    */
+    private $produit;
+
 
     /**
      * Get id
@@ -123,5 +129,29 @@ class EntreeProduit
     public function getDateEntree()
     {
         return $this->dateEntree;
+    }
+
+    /**
+     * Set produit
+     *
+     * @param \BackOfficeBundle\Entity\Produit $produit
+     *
+     * @return SortieProduit
+     */
+    public function setProduit(\BackOfficeBundle\Entity\Produit $produit = null)
+    {
+        $this->produit = $produit;
+
+        return $this;
+    }
+
+    /**
+     * Get produit
+     *
+     * @return \BackOfficeBundle\Entity\Produit
+     */
+    public function getProduit()
+    {
+        return $this->produit;
     }
 }

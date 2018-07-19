@@ -14,15 +14,15 @@ class FournisseurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nom',null,array(
-            'label'=>'Nom : ',
+            'label'=>'form.label.nom',
             'required'=>true
         ))
         ->add('adresse',null,array(
-            'label'=>'Adresse : ',
+            'label'=>'form.label.adresse',
             'required'=>false
         ))
         ->add('telephone',null,array(
-            'label'=>'Téléphone : ',
+            'label'=>'form.label.telephone',
             'required'=>false
         ));
     }/**

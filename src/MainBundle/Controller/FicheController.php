@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use BackOfficeBundle\Entity\Client;
 use BackOfficeBundle\Entity\Commande;
 use BackOfficeBundle\Entity\LigneCommande;
+use BackOfficeBundle\Entity\Produit;
+use BackOfficeBundle\Form\ClientType;
 
 
 class FicheController extends Controller
@@ -14,8 +16,9 @@ class FicheController extends Controller
     public function ficheAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $produit = $em->getRepository('BackOfficeBundle:Produit')->find($id);
-        $autresProduits = $em->getRepository('BackOfficeBundle:Produit')->getOtherProduct($id);
+        $produit = $em->getRepository(Produit::class)->find($id);
+
+        $autresProduits = $em->getRepository(Produit::class)->getOtherProduct($id);
 
         return $this->render('@Main/Fiche/fiche.html.twig',array(
             'produit' => $produit,
@@ -26,27 +29,28 @@ class FicheController extends Controller
     public function inscriptionAction($id,Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $produit = $em->getRepository('BackOfficeBundle:Produit')->find($id);
-        $autresProduits = $em->getRepository('BackOfficeBundle:Produit')->getOtherProduct($id);
-        $qtt = $request->get('qttCmde');
-        $prixTtc = $request->get('prixTtc');
+        $produit = $em->getRepository(Produit::class)->find($id);
+
+        $autresProduits = $em->getRepository(Produit::class)->getOtherProduct($id);
+
         $client = new Client();
-        $form = $this->createForm('BackOfficeBundle\Form\ClientType', $client);
+        $form = $this->createForm(ClientType::class, $client);
 
         return $this->render('@Main/Fiche/inscription.html.twig',array(
             'produit' => $produit,
             'autresProduits'=>$autresProduits,
-            'qtt'=>$qtt,
-            'prixTtc'=>$prixTtc,
+            'qtt'=>$request->get('qttCmde'),
+            'prixTtc'=>$request->get('prixTtc'),
             'form' => $form->createView(),
         ));
     }
     public function panierAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        
         $requestSession = $this->container->get('request_stack')->getCurrentRequest();
         $session = $requestSession->getSession();
         $monPanier = $session->get('monPanier');
+        
         $tabIdsQtt = array();
         $produitPanier = array();
         if(empty($monPanier))
@@ -90,6 +94,7 @@ class FicheController extends Controller
             }
             $ids = implode(',', $tabIds);
             
+            $em = $this->getDoctrine()->getManager();
             $produitPanier = $em->getRepository('BackOfficeBundle:Produit')->getProductPanier($ids);
 
 

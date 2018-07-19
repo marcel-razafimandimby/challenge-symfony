@@ -5,6 +5,7 @@ namespace BackOfficeBundle\Controller;
 use BackOfficeBundle\Entity\Produit;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use BackOfficeBundle\Form\ProduitType;
 
 /**
  * Produit controller.
@@ -20,7 +21,7 @@ class ProduitController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $produits = $em->getRepository('BackOfficeBundle:Produit')->findAll();
+        $produits = $em->getRepository(Produit::class)->findAll();
 
         return $this->render('@BackOffice/produit/index.html.twig', array(
             'produits' => $produits,
@@ -34,14 +35,16 @@ class ProduitController extends Controller
     public function newAction(Request $request)
     {
         $produit = new Produit();
-        $form = $this->createForm('BackOfficeBundle\Form\ProduitType', $produit);
+        $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($produit);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Enregistrement effectuée avec succès');
+
+            //$this->get('common.flashBag')->add('success');
+
             return $this->redirectToRoute('backoffice_produit_index', array('id' => $produit->getId()));
         }
 
@@ -72,12 +75,14 @@ class ProduitController extends Controller
     public function editAction(Request $request, Produit $produit)
     {
         $deleteForm = $this->createDeleteForm($produit);
-        $editForm = $this->createForm('BackOfficeBundle\Form\ProduitType', $produit);
+        $editForm = $this->createForm(ProduitType::class, $produit);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Modification effectuée avec succès');
+
+            $this->get('common.flashBag')->add('success');
+
             return $this->redirectToRoute('backoffice_produit_edit', array('id' => $produit->getId()));
         }
 
@@ -124,7 +129,7 @@ class ProduitController extends Controller
 
     public function deleteElementAction($id){
         $em = $this->getDoctrine()->getManager();
-        $produit = $em->getRepository('BackOfficeBundle:Produit')->find($id);
+        $produit = $em->getRepository(Produit::class)->find($id);
 
         if(!$produit){
             throw $this->createNotFoundException('Enable to find produit');
@@ -132,7 +137,8 @@ class ProduitController extends Controller
                        
             $em->remove($produit);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'La suppression est effectuée avec succes!');
+
+            $this->get('common.flashBag')->add('success_delete');
 
             return $this->redirect($this->generateUrl('backoffice_produit_index'));
         }

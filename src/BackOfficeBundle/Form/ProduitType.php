@@ -21,8 +21,8 @@ class ProduitType extends AbstractType
                     'Sport' => 'Sport'
                     ),
                 'required' => true,
-                'label' => 'Type :',
-                'placeholder' => '--- Selectionner Type ----'
+                'label' => 'form.label.type',
+                'placeholder' => 'selectionner.type'
             ))
         ->add('genre',ChoiceType::class,array(
                 'choices'=>array(
@@ -32,23 +32,23 @@ class ProduitType extends AbstractType
                     'Enfant'=>'Enfant'
                     ),
                 'required' => true,
-                'label' => 'Genre :',
-                'placeholder' => '--- Selectionner Genre ----'
+                'label' => 'form.label.genre',
+                'placeholder' => 'selectionner.genre'
             ))
         ->add('titre',null,array(
-            'label'=>"Titre : "
+            'label'=>"form.label.titre"
         ))
         ->add('description',null,array(
-            'label'=>"Description : "
+            'label'=>"form.label.description"
         ))
         ->add('marque',null,array(
-            'label'=>"Marque (Fournisseur) : "
+            'label'=>"form.label.marque"
         ))
         ->add('qtt',null,array(
-            'label'=>"Qtt : "
+            'label'=>"form.label.qtt"
         ))
         ->add('prixTtc',null,array(
-            'label'=>"Prix (TTC) : "
+            'label'=>"form.label.prixTtc"
         ))
         ;
 

@@ -20,8 +20,8 @@ backoffice_commande_edit:
 
 backoffice_commande_delete:
     path:     /{id}/delete
-    defaults: { _controller: "BackOfficeBundle:Commande:delete" }
-    methods:  DELETE
+    defaults: { _controller: "BackOfficeBundle:Commande:deleteElement" }
+    methods:  [GET, POST]
 #details commande par produit
 backoffice_commande_details:
     path:     /detail/{id}

@@ -5,6 +5,7 @@ namespace BackOfficeBundle\Controller;
 use BackOfficeBundle\Entity\LigneCommande;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use BackOfficeBundle\Form\LigneCommandeType;
 
 /**
  * Lignecommande controller.
@@ -20,7 +21,7 @@ class LigneCommandeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $ligneCommandes = $em->getRepository('BackOfficeBundle:LigneCommande')->findAll();
+        $ligneCommandes = $em->getRepository(LigneCommande::class)->findAll();
 
         return $this->render('@BackOffice/lignecommande/index.html.twig', array(
             'ligneCommandes' => $ligneCommandes,
@@ -34,7 +35,7 @@ class LigneCommandeController extends Controller
     public function newAction(Request $request)
     {
         $ligneCommande = new Lignecommande();
-        $form = $this->createForm('BackOfficeBundle\Form\LigneCommandeType', $ligneCommande);
+        $form = $this->createForm(LigneCommandeType::class, $ligneCommande);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -72,12 +73,14 @@ class LigneCommandeController extends Controller
     public function editAction(Request $request, LigneCommande $ligneCommande)
     {
         $deleteForm = $this->createDeleteForm($ligneCommande);
-        $editForm = $this->createForm('BackOfficeBundle\Form\LigneCommandeType', $ligneCommande);
+        $editForm = $this->createForm(LigneCommandeType::class, $ligneCommande);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Modification effectuée avec succès');
+
+            $this->get('common.flashBag')->add('success');
+
             return $this->redirectToRoute('backoffice_lignecommande_edit', array('id' => $ligneCommande->getId()));
         }
 
@@ -124,7 +127,7 @@ class LigneCommandeController extends Controller
 
     public function deleteElementAction($id){
         $em = $this->getDoctrine()->getManager();
-        $lignecommande = $em->getRepository('BackOfficeBundle:LigneCommande')->find($id);
+        $lignecommande = $em->getRepository(LigneCommande::class)->find($id);
         $id_commande = $lignecommande->getCommande()->getId();
         if(!$lignecommande){
             throw $this->createNotFoundException('Enable to find lignecommande');
@@ -132,7 +135,8 @@ class LigneCommandeController extends Controller
                        
             $em->remove($lignecommande);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'La suppression est effectuée avec succes!');
+            
+            $this->get('common.flashBag')->add('success_delete');
 
             return $this->redirect($this->generateUrl('backoffice_commande_details',array("id"=>$id_commande)));
         }

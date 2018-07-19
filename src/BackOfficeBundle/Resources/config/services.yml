@@ -2,3 +2,16 @@ services:
 #    back_office.example:
 #        class: BackOfficeBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+    _defaults: { public: true }
+  
+    backoffice.commande:
+        class: BackOfficeBundle\Services\Commande\CommandeService
+        arguments: ['@doctrine.orm.entity_manager']
+
+    backoffice.stock:
+        class: BackOfficeBundle\Services\Stock\StockService
+        arguments: ['@doctrine.orm.entity_manager']
+
+    common.flashBag:
+        class: BackOfficeBundle\Services\Common\CommonService
+        arguments: ['@session','@translator']

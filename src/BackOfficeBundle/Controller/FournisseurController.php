@@ -5,6 +5,7 @@ namespace BackOfficeBundle\Controller;
 use BackOfficeBundle\Entity\Fournisseur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use BackOfficeBundle\Form\FournisseurType;
 
 /**
  * Fournisseur controller.
@@ -20,7 +21,7 @@ class FournisseurController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $fournisseurs = $em->getRepository('BackOfficeBundle:Fournisseur')->findAll();
+        $fournisseurs = $em->getRepository(Fournisseur::class)->findAll();
 
         return $this->render('@BackOffice/fournisseur/index.html.twig', array(
             'fournisseurs' => $fournisseurs,
@@ -34,7 +35,7 @@ class FournisseurController extends Controller
     public function newAction(Request $request)
     {
         $fournisseur = new Fournisseur();
-        $form = $this->createForm('BackOfficeBundle\Form\FournisseurType', $fournisseur);
+        $form = $this->createForm(FournisseurType::class, $fournisseur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,7 +43,8 @@ class FournisseurController extends Controller
             $em->persist($fournisseur);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'Enregistrement effectuée avec succès');
+            $this->get('common.flashBag')->add('success');
+
             return $this->redirectToRoute('backoffice_fournisseur_index', array('id' => $fournisseur->getId()));
         }
 
@@ -73,13 +75,15 @@ class FournisseurController extends Controller
     public function editAction(Request $request, Fournisseur $fournisseur)
     {
         $deleteForm = $this->createDeleteForm($fournisseur);
-        $editForm = $this->createForm('BackOfficeBundle\Form\FournisseurType', $fournisseur);
+        $editForm = $this->createForm(FournisseurType::class, $fournisseur);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Modification effectuée avec succès');
-            return $this->redirectToRoute('backoffice_client_index', array('id' => $fournisseur->getId()));
+
+            $this->get('common.flashBag')->add('success');
+
+            return $this->redirectToRoute('backoffice_fournisseur_index', array('id' => $fournisseur->getId()));
         }
 
         return $this->render('@BackOffice/fournisseur/edit.html.twig', array(
@@ -124,7 +128,7 @@ class FournisseurController extends Controller
     }
     public function deleteElementAction($id){
         $em = $this->getDoctrine()->getManager();
-        $fournisseur = $em->getRepository('BackOfficeBundle:Fournisseur')->find($id);
+        $fournisseur = $em->getRepository(Fournisseur::class)->find($id);
 
         if(!$fournisseur){
             throw $this->createNotFoundException('Enable to find fournisseur');
@@ -132,7 +136,8 @@ class FournisseurController extends Controller
                        
             $em->remove($fournisseur);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'La suppression est effectuée avec succes!');
+            
+            $this->get('common.flashBag')->add('success_delete');
 
             return $this->redirect($this->generateUrl('backoffice_fournisseur_index'));
         }

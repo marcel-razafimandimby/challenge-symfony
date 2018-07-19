@@ -107,21 +107,6 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
 
         }
 
-        // user_homepage
-        if ('' === $trimmedPathinfo) {
-            $ret = array (  '_controller' => 'UserBundle\\Controller\\DefaultController::indexAction',  '_route' => 'user_homepage',);
-            if ('/' === substr($pathinfo, -1)) {
-                // no-op
-            } elseif ('GET' !== $canonicalMethod) {
-                goto not_user_homepage;
-            } else {
-                return array_replace($ret, $this->redirect($rawPathinfo.'/', 'user_homepage'));
-            }
-
-            return $ret;
-        }
-        not_user_homepage:
-
         // main_homepage
         if ('' === $trimmedPathinfo) {
             $ret = array (  '_controller' => 'MainBundle\\Controller\\IndexController::indexAction',  '_route' => 'main_homepage',);
@@ -291,9 +276,9 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
 
                 // backoffice_commande_delete
                 if (preg_match('#^/backoffice/commande/(?P<id>[^/]++)/delete$#sD', $pathinfo, $matches)) {
-                    $ret = $this->mergeDefaults(array_replace($matches, array('_route' => 'backoffice_commande_delete')), array (  '_controller' => 'BackOfficeBundle\\Controller\\CommandeController::deleteAction',));
-                    if (!in_array($requestMethod, array('DELETE'))) {
-                        $allow = array_merge($allow, array('DELETE'));
+                    $ret = $this->mergeDefaults(array_replace($matches, array('_route' => 'backoffice_commande_delete')), array (  '_controller' => 'BackOfficeBundle\\Controller\\CommandeController::deleteElementAction',));
+                    if (!in_array($canonicalMethod, array('GET', 'POST'))) {
+                        $allow = array_merge($allow, array('GET', 'POST'));
                         goto not_backoffice_commande_delete;
                     }
 
@@ -587,9 +572,9 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
 
                 // backoffice_entreeproduit_delete
                 if (preg_match('#^/backoffice/entreeproduit/(?P<id>[^/]++)/delete$#sD', $pathinfo, $matches)) {
-                    $ret = $this->mergeDefaults(array_replace($matches, array('_route' => 'backoffice_entreeproduit_delete')), array (  '_controller' => 'BackOfficeBundle\\Controller\\EntreeProduitController::deleteAction',));
-                    if (!in_array($requestMethod, array('DELETE'))) {
-                        $allow = array_merge($allow, array('DELETE'));
+                    $ret = $this->mergeDefaults(array_replace($matches, array('_route' => 'backoffice_entreeproduit_delete')), array (  '_controller' => 'BackOfficeBundle\\Controller\\EntreeProduitController::deleteElementAction',));
+                    if (!in_array($canonicalMethod, array('POST', 'DELETE', 'GET'))) {
+                        $allow = array_merge($allow, array('POST', 'DELETE', 'GET'));
                         goto not_backoffice_entreeproduit_delete;
                     }
 
@@ -658,9 +643,9 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
 
                 // backoffice_sortieproduit_delete
                 if (preg_match('#^/backoffice/sortieproduit/(?P<id>[^/]++)/delete$#sD', $pathinfo, $matches)) {
-                    $ret = $this->mergeDefaults(array_replace($matches, array('_route' => 'backoffice_sortieproduit_delete')), array (  '_controller' => 'BackOfficeBundle\\Controller\\SortieProduitController::deleteAction',));
-                    if (!in_array($requestMethod, array('DELETE'))) {
-                        $allow = array_merge($allow, array('DELETE'));
+                    $ret = $this->mergeDefaults(array_replace($matches, array('_route' => 'backoffice_sortieproduit_delete')), array (  '_controller' => 'BackOfficeBundle\\Controller\\SortieProduitController::deleteElementAction',));
+                    if (!in_array($canonicalMethod, array('POST', 'DELETE', 'GET'))) {
+                        $allow = array_merge($allow, array('POST', 'DELETE', 'GET'));
                         goto not_backoffice_sortieproduit_delete;
                     }
 
@@ -785,6 +770,77 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
                     return $ret;
                 }
                 not_fos_user_security_logout:
+
+            }
+
+            elseif (0 === strpos($pathinfo, '/backoffice/stock')) {
+                // backoffice_stock_index
+                if ('/backoffice/stock' === $trimmedPathinfo) {
+                    $ret = array (  '_controller' => 'BackOfficeBundle\\Controller\\StockController::indexAction',  '_route' => 'backoffice_stock_index',);
+                    if ('/' === substr($pathinfo, -1)) {
+                        // no-op
+                    } elseif ('GET' !== $canonicalMethod) {
+                        goto not_backoffice_stock_index;
+                    } else {
+                        return array_replace($ret, $this->redirect($rawPathinfo.'/', 'backoffice_stock_index'));
+                    }
+
+                    if (!in_array($canonicalMethod, array('GET'))) {
+                        $allow = array_merge($allow, array('GET'));
+                        goto not_backoffice_stock_index;
+                    }
+
+                    return $ret;
+                }
+                not_backoffice_stock_index:
+
+                // backoffice_stock_show
+                if (preg_match('#^/backoffice/stock/(?P<id>[^/]++)/show$#sD', $pathinfo, $matches)) {
+                    $ret = $this->mergeDefaults(array_replace($matches, array('_route' => 'backoffice_stock_show')), array (  '_controller' => 'BackOfficeBundle\\Controller\\StockController::showAction',));
+                    if (!in_array($canonicalMethod, array('GET'))) {
+                        $allow = array_merge($allow, array('GET'));
+                        goto not_backoffice_stock_show;
+                    }
+
+                    return $ret;
+                }
+                not_backoffice_stock_show:
+
+                // backoffice_stock_new
+                if ('/backoffice/stock/new' === $pathinfo) {
+                    $ret = array (  '_controller' => 'BackOfficeBundle\\Controller\\StockController::newAction',  '_route' => 'backoffice_stock_new',);
+                    if (!in_array($canonicalMethod, array('GET', 'POST'))) {
+                        $allow = array_merge($allow, array('GET', 'POST'));
+                        goto not_backoffice_stock_new;
+                    }
+
+                    return $ret;
+                }
+                not_backoffice_stock_new:
+
+                // backoffice_stock_edit
+                if (preg_match('#^/backoffice/stock/(?P<id>[^/]++)/edit$#sD', $pathinfo, $matches)) {
+                    $ret = $this->mergeDefaults(array_replace($matches, array('_route' => 'backoffice_stock_edit')), array (  '_controller' => 'BackOfficeBundle\\Controller\\StockController::editAction',));
+                    if (!in_array($canonicalMethod, array('GET', 'POST'))) {
+                        $allow = array_merge($allow, array('GET', 'POST'));
+                        goto not_backoffice_stock_edit;
+                    }
+
+                    return $ret;
+                }
+                not_backoffice_stock_edit:
+
+                // backoffice_stock_delete
+                if (preg_match('#^/backoffice/stock/(?P<id>[^/]++)/delete$#sD', $pathinfo, $matches)) {
+                    $ret = $this->mergeDefaults(array_replace($matches, array('_route' => 'backoffice_stock_delete')), array (  '_controller' => 'BackOfficeBundle\\Controller\\StockController::deleteElementAction',));
+                    if (!in_array($canonicalMethod, array('POST', 'DELETE', 'GET'))) {
+                        $allow = array_merge($allow, array('POST', 'DELETE', 'GET'));
+                        goto not_backoffice_stock_delete;
+                    }
+
+                    return $ret;
+                }
+                not_backoffice_stock_delete:
 
             }
 

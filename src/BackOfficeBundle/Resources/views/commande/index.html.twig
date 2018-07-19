@@ -15,8 +15,7 @@
                 <th>Adresse</th>
                 <th>Total TTC</th>
                 <th>Etat</th>
-                
-                <!--th>Actions</th-->
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -30,7 +29,7 @@
                 <td>{{ commande.client.adresse }}</td>
                 <td>{% if tabTotal[commande.numeroCmde] is defined %} {{ tabTotal[commande.numeroCmde] }}€ {% endif %}</td>
                 <td>{% if commande.etat %}<span class="glyphicon glyphicon-ok"></span>{% else %}<span class="glyphicon glyphicon-remove" style="color:red;"></span>{% endif %}</td>
-                
+                <td><a href="{{ path('backoffice_commande_delete',{'id':commande.id }) }}" onclick="return deleteList();"><span class="glyphicon glyphicon-remove"></span>Delete</a></td>
                 
             </tr>
         {% endfor %}

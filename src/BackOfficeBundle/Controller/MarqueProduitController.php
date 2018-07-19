@@ -5,6 +5,7 @@ namespace BackOfficeBundle\Controller;
 use BackOfficeBundle\Entity\MarqueProduit;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use BackOfficeBundle\Form\MarqueProduitType;
 
 /**
  * Marqueproduit controller.
@@ -20,7 +21,7 @@ class MarqueProduitController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $marqueProduits = $em->getRepository('BackOfficeBundle:MarqueProduit')->findAll();
+        $marqueProduits = $em->getRepository(MarqueProduit::class)->findAll();
 
         return $this->render('@BackOffice/marqueproduit/index.html.twig', array(
             'marqueProduits' => $marqueProduits,
@@ -34,14 +35,16 @@ class MarqueProduitController extends Controller
     public function newAction(Request $request)
     {
         $marqueProduit = new Marqueproduit();
-        $form = $this->createForm('BackOfficeBundle\Form\MarqueProduitType', $marqueProduit);
+        $form = $this->createForm(MarqueProduitType::class, $marqueProduit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($marqueProduit);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Enregistrement effectuée avec succès');
+            
+            $this->get('common.flashBag')->add('success');
+
             return $this->redirectToRoute('backoffice_marqueproduit_index', array('id' => $marqueProduit->getId()));
         }
 
@@ -72,12 +75,14 @@ class MarqueProduitController extends Controller
     public function editAction(Request $request, MarqueProduit $marqueProduit)
     {
         $deleteForm = $this->createDeleteForm($marqueProduit);
-        $editForm = $this->createForm('BackOfficeBundle\Form\MarqueProduitType', $marqueProduit);
+        $editForm = $this->createForm(MarqueProduitType::class, $marqueProduit);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Modification effectuée avec succès');
+            
+            $this->get('common.flashBag')->add('success');
+            
             return $this->redirectToRoute('backoffice_marqueproduit_index', array('id' => $marqueProduit->getId()));
         }
 
@@ -124,7 +129,7 @@ class MarqueProduitController extends Controller
 
     public function deleteElementAction($id){
         $em = $this->getDoctrine()->getManager();
-        $marqueproduit = $em->getRepository('BackOfficeBundle:MarqueProduit')->find($id);
+        $marqueproduit = $em->getRepository(MarqueProduit::class)->find($id);
 
         if(!$marqueproduit){
             throw $this->createNotFoundException('Enable to find marqueproduit');
@@ -132,8 +137,9 @@ class MarqueProduitController extends Controller
                        
             $em->remove($marqueproduit);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'La suppression est effectuée avec succes!');
-
+            
+            $this->get('common.flashBag')->add('success_delete');
+            
             return $this->redirect($this->generateUrl('backoffice_marqueproduit_index'));
         }
 

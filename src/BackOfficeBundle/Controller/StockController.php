@@ -5,6 +5,7 @@ namespace BackOfficeBundle\Controller;
 use BackOfficeBundle\Entity\Stock;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use BackOfficeBundle\Form\StockType;
 
 /**
  * Stock controller.
@@ -21,22 +22,12 @@ class StockController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $stocks = $em->getRepository('BackOfficeBundle:Stock')->findAll();
-        $produits = $em->getRepository('BackOfficeBundle:Produit')->findAll();
-        if(!$stocks && $produits){ //Réinitialisation Stock
-            foreach ($produits as $key => $value) {
-                $stock = new Stock();
-                $stock->setQtt($value->getQtt());
-                $stock->setProduit($value);
-                $em->persist($stock);
-                $em->flush();
-
-            }
-           
-            $stocks = $em->getRepository('BackOfficeBundle:Stock')->findAll();
-        }
+        //initialisation du stock 
+        $initStocks = $this->get('backoffice.stock')->initStock($stocks);
+        
 
         return $this->render('@BackOffice/stock/index.html.twig', array(
-            'stocks' => $stocks,
+            'stocks' => $initStocks,
         ));
     }
 
@@ -47,14 +38,16 @@ class StockController extends Controller
     public function newAction(Request $request)
     {
         $stock = new Stock();
-        $form = $this->createForm('BackOfficeBundle\Form\StockType', $stock);
+        $form = $this->createForm(StockType::class, $stock);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($stock);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Enregistrement effectuée avec succès');
+
+            $this->get('common.flashBag')->add('success');
+
             return $this->redirectToRoute('backoffice_stock_show', array('id' => $stock->getId()));
         }
 
@@ -85,12 +78,14 @@ class StockController extends Controller
     public function editAction(Request $request, Stock $stock)
     {
         $deleteForm = $this->createDeleteForm($stock);
-        $editForm = $this->createForm('BackOfficeBundle\Form\StockType', $stock);
+        $editForm = $this->createForm(StockType::class, $stock);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Modification effectuée avec succès');
+
+            $this->get('common.flashBag')->add('success');
+
             return $this->redirectToRoute('backoffice_stock_edit', array('id' => $stock->getId()));
         }
 
@@ -115,7 +110,9 @@ class StockController extends Controller
             $em->remove($stock);
             $em->flush();
         }
-        $this->get('session')->getFlashBag()->add('success', 'Suppression effectuée avec succès');
+
+        $this->get('common.flashBag')->add('success_delete');
+
         return $this->redirectToRoute('backoffice_stock_index');
     }
 
@@ -137,7 +134,7 @@ class StockController extends Controller
 
     public function deleteElementAction($id){
         $em = $this->getDoctrine()->getManager();
-        $stock = $em->getRepository('BackOfficeBundle:Stock')->find($id);
+        $stock = $em->getRepository(Stock::class)->find($id);
 
         if(!$stock){
             throw $this->createNotFoundException('Enable to find stock');
@@ -145,7 +142,8 @@ class StockController extends Controller
                        
             $em->remove($stock);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'La suppression est effectuée avec succes!');
+            
+            $this->get('common.flashBag')->add('success_delete');
 
             return $this->redirect($this->generateUrl('backoffice_stock_index'));
         }

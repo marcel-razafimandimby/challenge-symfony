@@ -14,10 +14,10 @@ class StockType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('produit',null,array(
-            'label'=>'Produit : '
+            'label'=>'form.label.produit'
         ))
         ->add('qtt',null,array(
-            'label'=>'Qtt : '
+            'label'=>'form.label.qtt'
         ))
         ;
     }/**

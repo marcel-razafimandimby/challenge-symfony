@@ -5,6 +5,7 @@ namespace BackOfficeBundle\Controller;
 use BackOfficeBundle\Entity\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use BackOfficeBundle\Form\ClientType;
 
 /**
  * Client controller.
@@ -20,7 +21,7 @@ class ClientController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $clients = $em->getRepository('BackOfficeBundle:Client')->findAll();
+        $clients = $em->getRepository(Client::class)->findAll();
 
         return $this->render('@BackOffice/client/index.html.twig', array(
             'clients' => $clients,
@@ -34,7 +35,7 @@ class ClientController extends Controller
     public function newAction(Request $request)
     {
         $client = new Client();
-        $form = $this->createForm('BackOfficeBundle\Form\ClientType', $client);
+        $form = $this->createForm(ClientType::class, $client);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,7 +43,8 @@ class ClientController extends Controller
             $em->persist($client);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'Enregistrement effectuée avec succès');
+            $this->get('common.flashBag')->add('success');
+
             return $this->redirectToRoute('backoffice_client_index', array('id' => $client->getId()));
         }
 
@@ -73,13 +75,14 @@ class ClientController extends Controller
     public function editAction(Request $request, Client $client)
     {
         $deleteForm = $this->createDeleteForm($client);
-        $editForm = $this->createForm('BackOfficeBundle\Form\ClientType', $client);
+        $editForm = $this->createForm(ClientType::class, $client);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'Modification effectuée avec succès');
+            $this->get('common.flashBag')->add('success');
+
             return $this->redirectToRoute('backoffice_client_index', array('id' => $client->getId()));
         }
 
@@ -104,7 +107,9 @@ class ClientController extends Controller
             $em->remove($client);
             $em->flush();
         }
-        $this->get('session')->getFlashBag()->add('success', 'Suppression effectuée avec succès');
+
+        $this->get('common.flashBag')->add('success');
+
         return $this->redirectToRoute('backoffice_client_index');
     }
 
@@ -126,7 +131,7 @@ class ClientController extends Controller
 
     public function deleteElementAction($id){
         $em = $this->getDoctrine()->getManager();
-        $client = $em->getRepository('BackOfficeBundle:Client')->find($id);
+        $client = $em->getRepository(Client::class)->find($id);
 
         if(!$client){
             throw $this->createNotFoundException('Enable to find Client');
@@ -134,7 +139,8 @@ class ClientController extends Controller
                        
             $em->remove($client);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'La suppression est effectuée avec succes!');
+            
+            $this->get('common.flashBag')->add('success_delete');
 
             return $this->redirect($this->generateUrl('backoffice_client_index'));
         }

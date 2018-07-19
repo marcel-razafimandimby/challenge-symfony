@@ -25,6 +25,9 @@ security:
             logout:
                 path: /backoffice/logout
                 target: /backoffice/login
+
+            logout_on_user_change: true
+            
             anonymous:    true
             #remember_me:
             #    key: %secret%

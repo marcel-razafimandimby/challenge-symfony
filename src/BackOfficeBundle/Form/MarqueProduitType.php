@@ -14,9 +14,12 @@ class MarqueProduitType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('fournisseur',null,array(
-            'required'=>true
+            'required'=>true,
+            'label'=>'form.label.fournisseur'
         ))
-        ->add('marque');
+        ->add('marque',null,array(
+            'label'=>'form.label.marque'
+        ));
     }/**
      * {@inheritdoc}
      */

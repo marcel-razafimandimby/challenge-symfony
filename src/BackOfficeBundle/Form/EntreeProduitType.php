@@ -16,11 +16,11 @@ class EntreeProduitType extends AbstractType
     {
         $builder->add('produit',null,array(
             'required'=>true,
-            'label'=>'Produit :'
+            'label'=>'form.label.produit'
         ))
         ->add('qtt',null,array(
             'required'=>true,
-            'label'=>'Qtt :'
+            'label'=>'form.label.qtt'
         ))
         /*->add('prixEntree',null,array(
             'required'=>true,
@@ -28,7 +28,7 @@ class EntreeProduitType extends AbstractType
         ))*/
         ->add('dateEntree', DateType::class, [
                 'widget' => 'single_text',
-                'label'=>'Date Entree : '
+                'label'=>'form.label.dateEntree'
 
             ]);
     }/**

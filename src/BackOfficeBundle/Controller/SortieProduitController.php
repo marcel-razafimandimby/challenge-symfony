@@ -5,6 +5,7 @@ namespace BackOfficeBundle\Controller;
 use BackOfficeBundle\Entity\SortieProduit;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use BackOfficeBundle\Form\SortieProduitType;
 
 /**
  * Sortieproduit controller.
@@ -20,7 +21,7 @@ class SortieProduitController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $sortieProduits = $em->getRepository('BackOfficeBundle:SortieProduit')->findBy(array(),array("dateSortie"=>"DESC"));
+        $sortieProduits = $em->getRepository(SortieProduit::class)->findBy(array(),array("dateSortie"=>"DESC"));
 
         return $this->render('@BackOffice/sortieproduit/index.html.twig', array(
             'sortieProduits' => $sortieProduits,
@@ -34,25 +35,18 @@ class SortieProduitController extends Controller
     public function newAction(Request $request)
     {
         $sortieProduit = new Sortieproduit();
-        $form = $this->createForm('BackOfficeBundle\Form\SortieProduitType', $sortieProduit);
+        $form = $this->createForm(SortieProduitType::class, $sortieProduit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($sortieProduit);
             $em->flush();
-            //retrait stock
-            $stock = $em->getRepository('BackOfficeBundle:Stock')->findBy(array("produit"=>$sortieProduit->getProduit()));
-            if($stock){
-                $qttStock = $stock[0]->getQtt();
-                $nvQtt = $qttStock - $sortieProduit->getQtt();
-                //mettre à jour stock
-                $stock[0]->setQtt($nvQtt);
-                $em->persist($stock[0]);
-                $em->flush();
+            //Mettre à jour le stock
+            $majStock = $this->get('backoffice.stock')->majStock($sortieProduit,'retrait');
+            if($majStock)
+                $this->get('common.flashBag')->add('success');
 
-            }
-            $this->get('session')->getFlashBag()->add('success', 'Enregistrement effectuée avec succès');
             return $this->redirectToRoute('backoffice_sortieproduit_index', array('id' => $sortieProduit->getId()));
         }
 
@@ -83,12 +77,14 @@ class SortieProduitController extends Controller
     public function editAction(Request $request, SortieProduit $sortieProduit)
     {
         $deleteForm = $this->createDeleteForm($sortieProduit);
-        $editForm = $this->createForm('BackOfficeBundle\Form\SortieProduitType', $sortieProduit);
+        $editForm = $this->createForm(SortieProduitType::class, $sortieProduit);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Modification effectuée avec succès');
+
+            $this->get('common.flashBag')->add('success');
+
             return $this->redirectToRoute('backoffice_sortieproduit_edit', array('id' => $sortieProduit->getId()));
         }
 
@@ -113,7 +109,9 @@ class SortieProduitController extends Controller
             $em->remove($sortieProduit);
             $em->flush();
         }
-        $this->get('session')->getFlashBag()->add('success', 'Suppression effectuée avec succès');
+
+        $this->get('common.flashBag')->add('success_delete');
+
         return $this->redirectToRoute('backoffice_sortieproduit_index');
     }
 
@@ -134,7 +132,7 @@ class SortieProduitController extends Controller
     }
     public function deleteElementAction($id){
         $em = $this->getDoctrine()->getManager();
-        $sortieproduit = $em->getRepository('BackOfficeBundle:SortieProduit')->find($id);
+        $sortieproduit = $em->getRepository(SortieProduit::class)->find($id);
 
         if(!$sortieproduit){
             throw $this->createNotFoundException('Enable to find sortieproduit');
@@ -142,13 +140,14 @@ class SortieProduitController extends Controller
                        
             $em->remove($sortieproduit);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'La suppression est effectuée avec succes!');
+            
+            $this->get('common.flashBag')->add('success_delete');
 
             return $this->redirect($this->generateUrl('backoffice_sortieproduit_index'));
         }
 
         return $this->render('@BackOffice/sortieproduit/index.html.twig', array(
-            'sortieProduits' => $em->getRepository('BackOfficeBundle:SortieProduit')->findAll()
+            'sortieProduits' => $em->getRepository(SortieProduit::class)->findAll()
 
         ));
     }

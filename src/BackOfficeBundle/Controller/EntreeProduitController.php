@@ -6,6 +6,7 @@ use BackOfficeBundle\Entity\EntreeProduit;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use BackOfficeBundle\Entity\Stock;
+use BackOfficeBundle\Form\EntreeProduitType;
 
 /**
  * Entreeproduit controller.
@@ -21,7 +22,7 @@ class EntreeProduitController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entreeProduits = $em->getRepository('BackOfficeBundle:EntreeProduit')->findBy(array(),array("dateEntree"=>"DESC"));
+        $entreeProduits = $em->getRepository(EntreeProduit::class)->findBy(array(),array("dateEntree"=>"DESC"));
 
         return $this->render('@BackOffice/entreeproduit/index.html.twig', array(
             'entreeProduits' => $entreeProduits,
@@ -35,25 +36,18 @@ class EntreeProduitController extends Controller
     public function newAction(Request $request)
     {
         $entreeProduit = new Entreeproduit();
-        $form = $this->createForm('BackOfficeBundle\Form\EntreeProduitType', $entreeProduit);
+        $form = $this->createForm(EntreeProduitType::class, $entreeProduit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entreeProduit);
             $em->flush();
-            //ajout stock
-            $stock = $em->getRepository('BackOfficeBundle:Stock')->findBy(array("produit"=>$entreeProduit->getProduit()));
-            if($stock){
-                $qttStock = $stock[0]->getQtt();
-                $nvQtt = $qttStock + $entreeProduit->getQtt();
-                //mettre à jour stock
-                $stock[0]->setQtt($nvQtt);
-                $em->persist($stock[0]);
-                $em->flush();
-
-            }
-            $this->get('session')->getFlashBag()->add('success', 'Enregistrement effectuée avec succès');
+            //Mettre à jour le stock
+            $addStock = $this->get('backoffice.stock')->majStock($entreeProduit,'ajout');
+            if($addStock)
+                $this->get('common.flashBag')->add('success');
+                
             return $this->redirectToRoute('backoffice_entreeproduit_index', array('id' => $entreeProduit->getId()));
         }
 
@@ -84,12 +78,14 @@ class EntreeProduitController extends Controller
     public function editAction(Request $request, EntreeProduit $entreeProduit)
     {
         $deleteForm = $this->createDeleteForm($entreeProduit);
-        $editForm = $this->createForm('BackOfficeBundle\Form\EntreeProduitType', $entreeProduit);
+        $editForm = $this->createForm(EntreeProduitType::class, $entreeProduit);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Modification effectuée avec succès');
+
+            $this->get('common.flashBag')->add('success');
+
             return $this->redirectToRoute('backoffice_entreeproduit_edit', array('id' => $entreeProduit->getId()));
         }
 
@@ -114,7 +110,9 @@ class EntreeProduitController extends Controller
             $em->remove($entreeProduit);
             $em->flush();
         }
-        $this->get('session')->getFlashBag()->add('success', 'Suppression effectuée avec succès');
+
+        $this->get('common.flashBag')->add('success_delete');
+
         return $this->redirectToRoute('backoffice_entreeproduit_index');
     }
 
@@ -136,7 +134,7 @@ class EntreeProduitController extends Controller
 
     public function deleteElementAction($id){
         $em = $this->getDoctrine()->getManager();
-        $entreeproduit = $em->getRepository('BackOfficeBundle:EntreeProduit')->find($id);
+        $entreeproduit = $em->getRepository(EntreeProduit::class)->find($id);
 
         if(!$entreeproduit){
             throw $this->createNotFoundException('Enable to find entreeproduit');
@@ -144,7 +142,8 @@ class EntreeProduitController extends Controller
                        
             $em->remove($entreeproduit);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'La suppression est effectuée avec succes!');
+            
+            $this->get('common.flashBag')->add('success_delete');
 
             return $this->redirect($this->generateUrl('backoffice_entreeproduit_index'));
         }

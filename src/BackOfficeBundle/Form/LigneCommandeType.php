@@ -13,10 +13,18 @@ class LigneCommandeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('commande')
-        ->add('produit')
-        ->add('qtt')
-        ->add('prixVente');
+        $builder->add('commande',null,array(
+            'label'=>'form.label.numCommande'
+        ))
+        ->add('produit',null,array(
+            'label'=>'form.label.produit'
+        ))
+        ->add('qtt',null,array(
+            'label'=>'form.label.qtt'
+        ))
+        ->add('prixVente',null,array(
+            'label'=>'form.label.prixVente'
+        ));
         
         
     }/**

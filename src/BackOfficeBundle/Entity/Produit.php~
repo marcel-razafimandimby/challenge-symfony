@@ -247,4 +247,8 @@ class Produit
     {
         return $this->marque;
     }
+
+    public function __toString(){
+        return $this->titre;
+    }
 }

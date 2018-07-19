@@ -131,4 +131,32 @@ class Commande
     {
         return $this->client;
     }
+
+    /**
+     * Set dateCommande
+     *
+     * @param \DateTime $dateCommande
+     *
+     * @return Commande
+     */
+    public function setDateCommande($dateCommande)
+    {
+        $this->dateCommande = $dateCommande;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCommande
+     *
+     * @return \DateTime
+     */
+    public function getDateCommande()
+    {
+        return $this->dateCommande;
+    }
+
+    public function __toString(){
+        return $this->numeroCmde;
+    }
 }
