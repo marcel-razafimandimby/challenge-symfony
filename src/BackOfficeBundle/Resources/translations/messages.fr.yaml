@@ -1,0 +1,33 @@
+#messages.fr.yml
+enregistrement.effectuee: Enregistrement effectuée avec succès!!
+suppression.effectuee: Supression effectuée avec succès!!
+selectionner.type: --- Selectionner Type ----
+selectionner.genre: --- Selectionner Genre ----
+Soleil: Soleil
+Vue: Vue
+Sport: Sport
+Homme: Homme
+Femme: Femme
+Mixte: Mixte
+Enfant: Enfant
+form:
+    label: 
+        nom: 'Nom : '
+        adresse: 'Adresse : '
+        telephone: 'Téléphone : '
+        fournisseur: 'Fournisseur :'
+        prenom: 'Prénom :'
+        email: 'Email :'
+        type: 'Type :'
+        genre: 'Genre :'
+        genre: --- Selectionner Genre ----
+        titre: 'Titre :'
+        description: 'Description :'
+        marque: 'Marque (Fournisseur) :'
+        qtt: 'Qtt : '
+        prixTtc: 'Prix (TTC) : '
+        produit: 'Produit :'
+        dateEntree: 'Date Entree : '
+        dateSortie: 'Date Sortie : '
+        numCommande: 'Numèro commande :'
+        prixVente: 'Prix de vente :'

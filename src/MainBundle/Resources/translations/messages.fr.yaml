@@ -1,0 +1,10 @@
+#messages.fr.yml
+produit:
+    panier:
+        supprimer: Le produit est bien supprimé dans le panier!!
+        ajout: Le produit est bien ajouté dans le panier !!
+        existe: Le produit est déjà présent dans le panier !!
+
+commande:
+    nonEnregistrer: Votre commande n'a pas pu être enregistrée
+    enregistrer: Votre commande est enregistrée

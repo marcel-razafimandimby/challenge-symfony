@@ -1,0 +1,18 @@
+enregistrement.effectuee: 'Enregistrement effectuée avec succès!!'
+suppression.effectuee: 'Supression effectuée avec succès!!'
+selectionner.type: '--- Selectionner Type ----'
+form.label.type: 'Type :'
+form.label.genre: 'Genre :'
+selectionner.genre: '--- Selectionner Genre ----'
+form.label.titre: 'Titre :'
+form.label.description: 'Description :'
+form.label.marque: 'Marque (Fournisseur) :'
+form.label.qtt: 'Qtt : '
+form.label.prixTtc: 'Prix (TTC) : '
+Soleil: Soleil
+Vue: Vue
+Sport: Sport
+Homme: Homme
+Femme: Femme
+Mixte: Mixte
+Enfant: Enfant

@@ -1,0 +1,32 @@
+#messages.en.yml
+enregistrement.effectuee: Registration done successfully !!
+suppression.effectuee: Delete done successfully !!
+selectionner.type: --- Choose Type ----
+selectionner.genre: --- Choose Gender ----
+Soleil: Sun
+Vue: View
+Sport: Sport
+Homme: Man
+Femme: Woman
+Mixte: Mixed
+Enfant: Child
+form:
+    label: 
+        nom: 'Name : '
+        adresse: 'Adress : '
+        telephone: 'Phone : '
+        fournisseur: 'Fournisseur :'
+        prenom: 'Firstname :'
+        email: 'Email :'
+        type: 'Type :'
+        genre: 'Gender :'
+        titre: 'Title :'
+        description: 'Description :'
+        marque: 'Brand (Supplier) :'
+        qtt: 'Qtt : '
+        prixTtc: 'Price (TTC) : '
+        produit: 'Product :'
+        dateEntree: 'Date Entered : '
+        dateSortie: 'Release date : '
+        numCommande: 'Order number :'
+        prixVente: 'Selling price :'

@@ -1,0 +1,29 @@
+enregistrement.effectuee: 'Registration done successfully !!'
+suppression.effectuee: 'Delete done successfully !!'
+selectionner.type: '--- Choose Type ----'
+selectionner.genre: '--- Choose Gender ----'
+Soleil: Sun
+Vue: View
+Sport: Sport
+Homme: Man
+Femme: Woman
+Mixte: Mixed
+Enfant: Child
+form.label.nom: 'Name : '
+form.label.adresse: 'Adress : '
+form.label.telephone: 'Phone : '
+form.label.fournisseur: 'Fournisseur :'
+form.label.prenom: 'Firstname :'
+form.label.email: 'Email :'
+form.label.type: 'Type :'
+form.label.genre: 'Gender :'
+form.label.titre: 'Title :'
+form.label.description: 'Description :'
+form.label.marque: 'Brand (Supplier) :'
+form.label.qtt: 'Qtt : '
+form.label.prixTtc: 'Price (TTC) : '
+form.label.produit: 'Product :'
+form.label.dateEntree: 'Date Entered : '
+form.label.dateSortie: 'Release date : '
+form.label.numCommande: 'Order number :'
+form.label.prixVente: 'Selling price :'

@@ -1,0 +1,18 @@
+enregistrement.effectuee: 'Registration done successfully !!'
+suppression.effectuee: 'Delete done successfully !!'
+selectionner.type: '--- Choose Type ----'
+form.label.type: 'Type :'
+form.label.genre: 'Gender :'
+selectionner.genre: '--- Choose Gender ----'
+form.label.titre: 'Title :'
+form.label.description: 'Description :'
+form.label.marque: 'Brand (Supplier) :'
+form.label.qtt: 'Qtt : '
+form.label.prixTtc: 'Price (TTC) : '
+Soleil: Sun
+Vue: View
+Sport: Sport
+Homme: Man
+Femme: Woman
+Mixte: Mixed
+Enfant: Child

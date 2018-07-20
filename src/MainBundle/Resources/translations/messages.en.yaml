@@ -1,0 +1,10 @@
+#messages.en.yml
+produit:
+    panier:
+        supprimer: The product is deleted in the basket !!
+        ajout: The product is well added in the basket !!
+        existe: The product is already present in the basket !!
+
+commande:
+    nonEnregistrer: Your order could not be saved
+    enregistrer: Your order is registered
