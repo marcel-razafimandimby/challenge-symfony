@@ -9,6 +9,7 @@ Homme: Man
 Femme: Woman
 Mixte: Mixed
 Enfant: Child
+'Cet email existe déjà !!.': 'This email is already in database !!.'
 form.label.nom: 'Name : '
 form.label.adresse: 'Adress : '
 form.label.telephone: 'Phone : '

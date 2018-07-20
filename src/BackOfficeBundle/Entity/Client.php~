@@ -5,12 +5,15 @@ namespace BackOfficeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+// On rajoute ce use pour la contrainte :
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Client
  *
  * @ORM\Table(name="client")
  * @ORM\Entity(repositoryClass="BackOfficeBundle\Repository\ClientRepository")
+ * @UniqueEntity(fields="email", message="Cet email existe déjà !!.")
  */
 class Client
 {
@@ -47,7 +50,7 @@ class Client
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     * @ORM\Column(name="email", type="string", length=255, nullable=false,unique=true)
      * @Assert\Email(
      *     message = "Adresse email '{{ value }}' invalide!!.",
      *     checkMX = true

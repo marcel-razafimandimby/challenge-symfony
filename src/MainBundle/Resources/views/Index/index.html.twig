@@ -24,7 +24,7 @@
                   		</div>
                   		<p class="text-right price">{{ produit.prixTtc }}€</p>
                   		<div class="row">
-                  			<div class="col-xs-6 text-left"><a href="{{ path('main_panierpage')}}?id={{ produit.id }}&qtt=1" class="btn btn-sm btn-default">Ajouter Panier</a></div>
+                  			<div class="col-xs-6 text-left"><a href="{{ path('main_panierpage_ajout',{'id':produit.id})}}" class="btn btn-sm btn-default">Ajouter Panier</a></div>
                   			<div class="col-xs-6 text-right"><a href="{{ path('main_fichepage',{'id':produit.id})}}" class="btn btn-sm btn-default">Commander</a></div>
                   		</div>
                   	</div>

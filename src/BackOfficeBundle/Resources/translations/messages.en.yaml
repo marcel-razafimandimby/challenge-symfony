@@ -30,3 +30,5 @@ form:
         dateSortie: 'Release date : '
         numCommande: 'Order number :'
         prixVente: 'Selling price :'
+
+Cet email existe déjà !!.: This email is already in database !!.

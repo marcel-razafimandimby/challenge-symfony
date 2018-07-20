@@ -2,3 +2,13 @@ services:
 #    main.example:
 #        class: MainBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+    _defaults: { public: true }
+
+    main.panier:
+        class: MainBundle\Services\Panier\PanierService
+        arguments: ['@session','@translator']
+
+    main.commande:
+        class: MainBundle\Services\Commande\CommandeService
+        arguments: ['@doctrine.orm.entity_manager', '@session', '@translator']
+

@@ -22,7 +22,7 @@
             </ul>
             
             <div class="row">
-                  <form action="{{ path('main_panierpage')}}" method="GET" name="addPanier">
+                  <form action="{{ path('main_panierpage_ajout',{'id':produit.id})}}" method="GET" name="addPanier">
                     <input type="hidden" name="id" value="{{ produit.id }}">
                     <input type="hidden" name="qtt" value="1" id="qtt">
                   <div class="col-xs-6 text-center">
@@ -50,7 +50,7 @@
                         </div>
                         <p class="text-right price">{{ un_produit.prixTtc }}€</p>
                         <div class="row">
-                            <div class="col-xs-6 text-left"><a href="#" class="btn btn-sm btn-default">Ajouter Panier</a></div>
+                            <div class="col-xs-6 text-left"><a href="{{ path('main_panierpage_ajout',{'id':un_produit.id})}}" class="btn btn-sm btn-default">Ajouter Panier</a></div>
                             <div class="col-xs-6 text-right"><a href="{{ path('main_fichepage',{'id':un_produit.id})}}" class="btn btn-sm btn-default">Commander</a></div>
                         </div>
                     </div>

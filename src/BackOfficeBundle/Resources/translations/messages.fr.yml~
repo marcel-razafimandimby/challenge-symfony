@@ -1,14 +1,7 @@
 enregistrement.effectuee: 'Enregistrement effectuée avec succès!!'
 suppression.effectuee: 'Supression effectuée avec succès!!'
 selectionner.type: '--- Selectionner Type ----'
-form.label.type: 'Type :'
-form.label.genre: 'Genre :'
 selectionner.genre: '--- Selectionner Genre ----'
-form.label.titre: 'Titre :'
-form.label.description: 'Description :'
-form.label.marque: 'Marque (Fournisseur) :'
-form.label.qtt: 'Qtt : '
-form.label.prixTtc: 'Prix (TTC) : '
 Soleil: Soleil
 Vue: Vue
 Sport: Sport
@@ -16,3 +9,22 @@ Homme: Homme
 Femme: Femme
 Mixte: Mixte
 Enfant: Enfant
+'Cet email existe déjà !!.': 'Cet email existe déjà !!.'
+form.label.nom: 'Nom : '
+form.label.adresse: 'Adresse : '
+form.label.telephone: 'Téléphone : '
+form.label.fournisseur: 'Fournisseur :'
+form.label.prenom: 'Prénom :'
+form.label.email: 'Email :'
+form.label.type: 'Type :'
+form.label.genre: 'Genre :'
+form.label.titre: 'Titre :'
+form.label.description: 'Description :'
+form.label.marque: 'Marque (Fournisseur) :'
+form.label.qtt: 'Qtt : '
+form.label.prixTtc: 'Prix (TTC) : '
+form.label.produit: 'Produit :'
+form.label.dateEntree: 'Date Entree : '
+form.label.dateSortie: 'Date Sortie : '
+form.label.numCommande: 'Numèro commande :'
+form.label.prixVente: 'Prix de vente :'

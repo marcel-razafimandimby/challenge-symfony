@@ -10,22 +10,49 @@ namespace BackOfficeBundle\Repository;
  */
 class ProduitRepository extends \Doctrine\ORM\EntityRepository
 {
-	public function getOtherProduct($id){
+	public function getOtherProduct($id)
+	{
 		$dql = "SELECT p
 		FROM BackOfficeBundle:Produit p
 		WHERE p.id!=:id";
-
 		$query = $this->_em->createQuery($dql);
 		$query->setParameter('id', $id);
 
 		return $query->getResult();
 	}
-	public function getProductPanier($tabId){
-		$dql = "SELECT p
-		FROM BackOfficeBundle:Produit p
-		WHERE p.id in (".$tabId.")";
 
-		$query = $this->_em->createQuery($dql);
-		return $query->getResult();
+	public function getProductPanier($monPanier)
+	{
+		if($monPanier){
+
+            $tabIds = array();
+            $tabIdsQtt = array();
+            
+            foreach ($monPanier as $key => $value) {
+                $explodeValue = explode("#", $value);
+                $tabIds[] = $explodeValue[0];
+                $tabIdsQtt[$explodeValue[0]] = $explodeValue[1];
+            }
+            $ids = implode(',', $tabIds);
+            $dql = "SELECT p
+			FROM BackOfficeBundle:Produit p
+			WHERE p.id in (".$ids.")";
+            $query = $this->_em->createQuery($dql);
+            $result = $query->getResult();
+            if($result){
+            	foreach ($result as $key => $value) {
+            		if(null!=$tabIdsQtt[$value->getId()]){
+            			$value->setQtt($tabIdsQtt[$value->getId()]);
+            		}
+            		$result[$key] = $value;
+            	}
+            }
+            
+            return $result;
+
+        }
+
+        return null;
+		
 	}
 }

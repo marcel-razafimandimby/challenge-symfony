@@ -11,6 +11,15 @@
           <div class="inner cover">
           	
             <h1 class="cover-heading text-left">Mon Panier</h1>
+            <ul class="list-unstyled">
+              {% for key, messages in app.session.flashbag.all() %}
+                  <li class="alert {% if key == 'error'%}alert-danger{%else%}alert-success{% endif %}">
+                      {% for message in messages %}
+                          {%if key == 'error'%}<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Error:</span>{% else %}<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;{% endif%} {{ message }}
+                      {% endfor %}
+                  </li>
+              {% endfor %}
+              </ul>
             {{ form_start(form,{'attr':{'action':path('main_validerCommandepage')}}) }}
               <table class="table">
                 <thead>
@@ -26,8 +35,8 @@
                   {% if produitPanier %}
                     {% for un_panier in produitPanier %}
                       {% set qttPanier = 1 %}
-                      {% if tabIdsQtt[un_panier.id] is defined %}
-                        {% set qttPanier = tabIdsQtt[un_panier.id] %}
+                      {% if un_panier.qtt is not null %}
+                        {% set qttPanier = un_panier.qtt %}
                       {% endif %}
                       {% set totalPanier = totalPanier + (un_panier.prixTtc*qttPanier) %}
                   <tr>
@@ -38,7 +47,7 @@
                     <td>{{ un_panier.titre }}</td>
                     <td><input class="form-control qttPanier" type="number" id="qtt_{{ un_panier.id }}" name="qtt[]" value="{{ qttPanier }}" onchange="addQtt({{ un_panier.id }},{{ qttPanier }},{{ totalPanier }},{{ un_panier.prixTtc }});"></td>
                     <td class="price_{{ un_panier.id }}">{{ un_panier.prixTtc*qttPanier }}€</td>
-                    <td><a href="{{ path('main_panierpage')}}?id={{un_panier.id}}&delete=1&qtt=1" onclick="return checkDelete();"><span class="glyphicon glyphicon-remove"></span> Supprimer</a></td>
+                    <td><a href="{{ path('main_panierpage_delete',{'id':un_panier.id})}}" onclick="return checkDelete();"><span class="glyphicon glyphicon-remove"></span> Supprimer</a></td>
                   </tr>
                     {% endfor %}
                   {% endif %}

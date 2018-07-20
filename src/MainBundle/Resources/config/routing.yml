@@ -17,6 +17,16 @@ main_panierpage:
     path:     /lunette/mon-panier.html
     defaults: { _controller: MainBundle:Fiche:panier }
 
+#add produit panier
+main_panierpage_ajout:
+    path:     /lunette/{id}/ajout-panier.html
+    defaults: { _controller: MainBundle:Fiche:panierAdd }
+
+#delete panier
+main_panierpage_delete:
+    path:     /lunette/{id}/delete-panier.html
+    defaults: { _controller: MainBundle:Fiche:panierDelete }
+
 #valider commande
 main_validerCommandepage:
     path:     /lunette/valider-commande.html
