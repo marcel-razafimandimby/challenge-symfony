@@ -134,13 +134,13 @@
     <parameter key="mailer_user">marcel.razafimandimby@gmail.com</parameter>
     <parameter key="mailer_password">m-marc</parameter>
     <parameter key="secret">e6885c5a0a7498c19657669d6d297e3e064f4afc</parameter>
-    <parameter key="locale">en</parameter>
+    <parameter key="locale">fr</parameter>
     <parameter key="fragment.renderer.hinclude.global_template"></parameter>
     <parameter key="fragment.path">/_fragment</parameter>
     <parameter key="kernel.secret">e6885c5a0a7498c19657669d6d297e3e064f4afc</parameter>
     <parameter key="kernel.http_method_override">true</parameter>
     <parameter key="kernel.trusted_hosts" type="collection"/>
-    <parameter key="kernel.default_locale">en</parameter>
+    <parameter key="kernel.default_locale">fr</parameter>
     <parameter key="templating.helper.code.file_link_format">null</parameter>
     <parameter key="debug.file_link_format">null</parameter>
     <parameter key="session.metadata.storage_key">_sf2_meta</parameter>
@@ -620,6 +620,15 @@
       <argument type="service" id="session"/>
       <argument type="service" id="translator.data_collector"/>
     </service>
+    <service id="main.panier" class="MainBundle\Services\Panier\PanierService" public="true">
+      <argument type="service" id="session"/>
+      <argument type="service" id="translator.data_collector"/>
+    </service>
+    <service id="main.commande" class="MainBundle\Services\Commande\CommandeService" public="true">
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+      <argument type="service" id="session"/>
+      <argument type="service" id="translator.data_collector"/>
+    </service>
     <service id="controller_name_converter" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser" public="false">
       <tag name="monolog.logger" channel="request"/>
       <argument type="service" id="kernel"/>
@@ -658,16 +667,8 @@
       <tag name="container.hot_path"/>
       <tag name="container.hot_path"/>
       <argument type="service" id="request_stack"/>
-      <argument>en</argument>
+      <argument>fr</argument>
       <argument type="service" id="router.default" on-invalid="ignore"/>
-    </service>
-    <service id="http_exception_listener" class="Symfony\Component\HttpKernel\EventListener\ExceptionListener" public="false">
-      <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" priority="-256"/>
-      <tag name="monolog.logger" channel="request"/>
-      <argument>null</argument>
-      <argument type="service" id="monolog.logger.request" on-invalid="null"/>
-      <argument>true</argument>
-      <argument>UTF-8</argument>
     </service>
     <service id="validate_request_listener" class="Symfony\Component\HttpKernel\EventListener\ValidateRequestListener">
       <tag name="kernel.event_subscriber"/>
@@ -871,7 +872,7 @@
       <argument type="service" id="translation.writer"/>
       <argument type="service" id="translation.reader"/>
       <argument type="service" id="translation.extractor"/>
-      <argument>en</argument>
+      <argument>fr</argument>
       <argument>/opt/lampp/htdocs/challenge-symfony/translations</argument>
       <argument>/opt/lampp/htdocs/challenge-symfony/templates</argument>
       <call method="setName">
@@ -1080,6 +1081,7 @@
     </service>
     <service id="session_listener" class="Symfony\Component\HttpKernel\EventListener\SessionListener">
       <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
       <tag name="container.hot_path"/>
       <tag name="container.hot_path"/>
       <argument type="service" id="2_ServiceLocator~kqdo.6x"/>
@@ -1393,7 +1395,7 @@
     <service id="translator.default" class="Symfony\Bundle\FrameworkBundle\Translation\Translator">
       <argument type="service" id="service_locator.yepb.pt"/>
       <argument type="service" id="translator.formatter.default"/>
-      <argument>en</argument>
+      <argument>fr</argument>
       <argument type="collection">
         <argument key="translation.loader.php" type="collection">
           <argument>php</argument>
@@ -1502,6 +1504,10 @@
             <argument>/opt/lampp/htdocs/challenge-symfony/vendor/symfony/symfony/src/Symfony/Component/Security/Core/Resources/translations/security.en.xlf</argument>
             <argument>/opt/lampp/htdocs/challenge-symfony/src/BackOfficeBundle/Resources/translations/messages.en.yaml</argument>
             <argument>/opt/lampp/htdocs/challenge-symfony/src/BackOfficeBundle/Resources/translations/messages.en.yml</argument>
+            <argument>/opt/lampp/htdocs/challenge-symfony/src/BackOfficeBundle/Resources/translations/validators.en.yaml</argument>
+            <argument>/opt/lampp/htdocs/challenge-symfony/src/BackOfficeBundle/Resources/translations/validators.en.yml</argument>
+            <argument>/opt/lampp/htdocs/challenge-symfony/src/MainBundle/Resources/translations/messages.en.yaml</argument>
+            <argument>/opt/lampp/htdocs/challenge-symfony/src/MainBundle/Resources/translations/messages.en.yml</argument>
             <argument>/opt/lampp/htdocs/challenge-symfony/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.en.yml</argument>
             <argument>/opt/lampp/htdocs/challenge-symfony/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.en.yml</argument>
           </argument>
@@ -1542,6 +1548,10 @@
             <argument>/opt/lampp/htdocs/challenge-symfony/vendor/symfony/symfony/src/Symfony/Component/Security/Core/Resources/translations/security.fr.xlf</argument>
             <argument>/opt/lampp/htdocs/challenge-symfony/src/BackOfficeBundle/Resources/translations/messages.fr.yaml</argument>
             <argument>/opt/lampp/htdocs/challenge-symfony/src/BackOfficeBundle/Resources/translations/messages.fr.yml</argument>
+            <argument>/opt/lampp/htdocs/challenge-symfony/src/BackOfficeBundle/Resources/translations/validators.fr.yaml</argument>
+            <argument>/opt/lampp/htdocs/challenge-symfony/src/BackOfficeBundle/Resources/translations/validators.fr.yml</argument>
+            <argument>/opt/lampp/htdocs/challenge-symfony/src/MainBundle/Resources/translations/messages.fr.yaml</argument>
+            <argument>/opt/lampp/htdocs/challenge-symfony/src/MainBundle/Resources/translations/messages.fr.yml</argument>
             <argument>/opt/lampp/htdocs/challenge-symfony/vendor/friendsofsymfony/user-bundle/Resources/translations/FOSUserBundle.fr.yml</argument>
             <argument>/opt/lampp/htdocs/challenge-symfony/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.fr.yml</argument>
           </argument>
@@ -1783,7 +1793,7 @@
       </call>
       <call method="setFallbackLocales">
         <argument type="collection">
-          <argument>en</argument>
+          <argument>fr</argument>
         </argument>
       </call>
     </service>
@@ -2033,7 +2043,6 @@
     <service id="translation.warmer" class="Symfony\Bundle\FrameworkBundle\CacheWarmer\TranslationsCacheWarmer" public="false">
       <tag name="kernel.cache_warmer"/>
       <tag name="container.service_subscriber" key="translator" id="translator.logging.inner"/>
-      <tag name="container.service_subscriber.locator" id="service_locator.s.m3yzc.translation.warmer"/>
       <argument type="service" id="service_locator.s.m3yzc.translation.warmer"/>
     </service>
     <service id="translator_listener" class="Symfony\Component\HttpKernel\EventListener\TranslatorListener">
@@ -2252,14 +2261,6 @@
       <argument type="service" id="debug.stopwatch"/>
       <argument type="service" id="monolog.logger.event" on-invalid="null"/>
       <call method="addListener">
-        <argument>kernel.exception</argument>
-        <argument type="collection">
-          <argument type="service" id="http_exception_listener"/>
-          <argument>onKernelException</argument>
-        </argument>
-        <argument>-256</argument>
-      </call>
-      <call method="addListener">
         <argument>kernel.controller</argument>
         <argument type="collection">
           <argument type="service" id="data_collector.router"/>
@@ -2346,6 +2347,14 @@
           <argument>onKernelResponse</argument>
         </argument>
         <argument>-1000</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.finish_request</argument>
+        <argument type="collection">
+          <argument type="service" id="session_listener"/>
+          <argument>onFinishRequest</argument>
+        </argument>
+        <argument>0</argument>
       </call>
       <call method="addListener">
         <argument>kernel.response</argument>
@@ -2771,15 +2780,6 @@
         <argument type="service" id="routing.loader.service"/>
       </call>
       <call method="addLoader">
-        <argument type="service" id="sensio_framework_extra.routing.loader.annot_class"/>
-      </call>
-      <call method="addLoader">
-        <argument type="service" id="sensio_framework_extra.routing.loader.annot_dir"/>
-      </call>
-      <call method="addLoader">
-        <argument type="service" id="sensio_framework_extra.routing.loader.annot_file"/>
-      </call>
-      <call method="addLoader">
         <argument type="service" id="routing.loader.annotation"/>
       </call>
       <call method="addLoader">
@@ -2849,7 +2849,6 @@
     <service id="router.cache_warmer" class="Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer" public="false">
       <tag name="container.service_subscriber" id="router"/>
       <tag name="kernel.cache_warmer"/>
-      <tag name="container.service_subscriber.locator" id="service_locator.lluwcxp.router.cache_warmer"/>
       <argument type="service" id="service_locator.lluwcxp.router.cache_warmer"/>
     </service>
     <service id="router_listener" class="Symfony\Component\HttpKernel\EventListener\RouterListener">
@@ -2969,6 +2968,9 @@
     </service>
     <service id="security.authentication.session_strategy" class="Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy" public="false">
       <argument>migrate</argument>
+    </service>
+    <service id="security.authentication.session_strategy_noop" class="Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy" public="false">
+      <argument>none</argument>
     </service>
     <service id="security.encoder_factory.generic" class="Symfony\Component\Security\Core\Encoder\EncoderFactory" public="false">
       <argument type="collection">
@@ -3394,6 +3396,10 @@
     <service id="security.authentication.guard_handler" class="Symfony\Component\Security\Guard\GuardAuthenticatorHandler">
       <argument type="service" id="security.token_storage"/>
       <argument type="service" id="debug.event_dispatcher" on-invalid="null"/>
+      <argument type="collection"/>
+      <call method="setSessionAuthenticationStrategy">
+        <argument type="service" id="security.authentication.session_strategy"/>
+      </call>
     </service>
     <service id="security.authentication.provider.guard" class="Symfony\Component\Security\Guard\Provider\GuardAuthenticationProvider" public="false" abstract="true">
       <argument></argument>
@@ -3664,9 +3670,6 @@
         <argument type="service" id="twig.extension.form"/>
       </call>
       <call method="addExtension">
-        <argument type="service" id="twig.extension.weblink"/>
-      </call>
-      <call method="addExtension">
         <argument type="service" id="twig.extension.dump"/>
       </call>
       <call method="addExtension">
@@ -3704,7 +3707,6 @@
     <service id="twig.cache_warmer" class="Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheCacheWarmer" public="false">
       <tag name="kernel.cache_warmer"/>
       <tag name="container.service_subscriber" id="twig"/>
-      <tag name="container.service_subscriber.locator" id="service_locator.c7_qahl.twig.cache_warmer"/>
       <argument type="service" id="service_locator.c7_qahl.twig.cache_warmer"/>
       <argument>null</argument>
       <argument type="collection">
@@ -3721,7 +3723,6 @@
     <service id="twig.template_cache_warmer" class="Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheWarmer" public="false">
       <tag name="kernel.cache_warmer"/>
       <tag name="container.service_subscriber" id="twig"/>
-      <tag name="container.service_subscriber.locator" id="service_locator.2m3e4be.twig.template_cache_warmer"/>
       <argument type="service" id="service_locator.2m3e4be.twig.template_cache_warmer"/>
       <argument type="service" id="twig.template_iterator"/>
     </service>
@@ -3870,6 +3871,9 @@
       <argument type="service" id="router.request_context" on-invalid="ignore"/>
     </service>
     <service id="twig.extension.debug" class="Twig\Extension\DebugExtension" public="false"/>
+    <service id="twig.extension.weblink" class="Symfony\Bridge\Twig\Extension\WebLinkExtension" public="false">
+      <argument type="service" id="request_stack"/>
+    </service>
     <service id="twig.translation.extractor" class="Symfony\Bridge\Twig\Translation\TwigExtractor">
       <tag name="translation.extractor" alias="twig"/>
       <argument type="service" id="twig"/>
@@ -3930,10 +3934,6 @@
       <call method="setName">
         <argument>lint:twig</argument>
       </call>
-    </service>
-    <service id="twig.extension.weblink" class="Symfony\Bridge\Twig\Extension\WebLinkExtension" public="false">
-      <tag name="twig.extension"/>
-      <argument type="service" id="request_stack"/>
     </service>
     <service id="monolog.logger" class="Symfony\Bridge\Monolog\Logger" public="false">
       <argument>app</argument>
@@ -4495,20 +4495,6 @@
       <tag name="container.hot_path"/>
       <argument type="service" id="annotations.cached_reader"/>
     </service>
-    <service id="sensio_framework_extra.routing.loader.annot_class" class="Sensio\Bundle\FrameworkExtraBundle\Routing\AnnotatedRouteControllerLoader" public="false">
-      <tag name="routing.loader"/>
-      <argument type="service" id="annotations.cached_reader"/>
-    </service>
-    <service id="sensio_framework_extra.routing.loader.annot_dir" class="Symfony\Component\Routing\Loader\AnnotationDirectoryLoader" public="false">
-      <tag name="routing.loader"/>
-      <argument type="service" id="file_locator"/>
-      <argument type="service" id="sensio_framework_extra.routing.loader.annot_class"/>
-    </service>
-    <service id="sensio_framework_extra.routing.loader.annot_file" class="Symfony\Component\Routing\Loader\AnnotationFileLoader" public="false">
-      <tag name="routing.loader"/>
-      <argument type="service" id="file_locator"/>
-      <argument type="service" id="sensio_framework_extra.routing.loader.annot_class"/>
-    </service>
     <service id="sensio_framework_extra.converter.listener" class="Sensio\Bundle\FrameworkExtraBundle\EventListener\ParamConverterListener" public="false">
       <tag name="kernel.event_subscriber"/>
       <tag name="container.hot_path"/>
@@ -4955,124 +4941,6 @@
       <tag name="container.service_locator"/>
       <argument type="collection"/>
     </service>
-    <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
-      <argument type="service" id="service_locator.awtor3q"/>
-      <argument type="collection">
-        <argument key="about">console.command.about</argument>
-        <argument key="assets:install">console.command.assets_install</argument>
-        <argument key="cache:clear">console.command.cache_clear</argument>
-        <argument key="cache:pool:clear">console.command.cache_pool_clear</argument>
-        <argument key="cache:pool:prune">console.command.cache_pool_prune</argument>
-        <argument key="cache:warmup">console.command.cache_warmup</argument>
-        <argument key="debug:config">console.command.config_debug</argument>
-        <argument key="config:dump-reference">console.command.config_dump_reference</argument>
-        <argument key="debug:container">console.command.container_debug</argument>
-        <argument key="debug:autowiring">console.command.debug_autowiring</argument>
-        <argument key="debug:event-dispatcher">console.command.event_dispatcher_debug</argument>
-        <argument key="debug:router">console.command.router_debug</argument>
-        <argument key="router:match">console.command.router_match</argument>
-        <argument key="debug:translation">console.command.translation_debug</argument>
-        <argument key="translation:update">console.command.translation_update</argument>
-        <argument key="lint:xliff">console.command.xliff_lint</argument>
-        <argument key="lint:yaml">console.command.yaml_lint</argument>
-        <argument key="debug:form">console.command.form_debug</argument>
-        <argument key="security:encode-password">security.command.user_password_encoder</argument>
-        <argument key="debug:twig">twig.command.debug</argument>
-        <argument key="lint:twig">twig.command.lint</argument>
-        <argument key="doctrine:database:create">doctrine.database_create_command</argument>
-        <argument key="doctrine:database:drop">doctrine.database_drop_command</argument>
-        <argument key="doctrine:generate:entities">doctrine.generate_entities_command</argument>
-        <argument key="doctrine:mapping:import">doctrine.mapping_import_command</argument>
-        <argument key="doctrine:cache:clear-metadata">doctrine.cache_clear_metadata_command</argument>
-        <argument key="doctrine:cache:clear-query">doctrine.cache_clear_query_cache_command</argument>
-        <argument key="doctrine:cache:clear-result">doctrine.cache_clear_result_command</argument>
-        <argument key="doctrine:cache:clear-collection-region">doctrine.cache_collection_region_command</argument>
-        <argument key="doctrine:mapping:convert">doctrine.mapping_convert_command</argument>
-        <argument key="doctrine:schema:create">doctrine.schema_create_command</argument>
-        <argument key="doctrine:schema:drop">doctrine.schema_drop_command</argument>
-        <argument key="doctrine:ensure-production-settings">doctrine.ensure_production_settings_command</argument>
-        <argument key="doctrine:cache:clear-entity-region">doctrine.clear_entity_region_command</argument>
-        <argument key="doctrine:database:import">doctrine.database_import_command</argument>
-        <argument key="doctrine:mapping:info">doctrine.mapping_info_command</argument>
-        <argument key="doctrine:cache:clear-query-region">doctrine.clear_query_region_command</argument>
-        <argument key="doctrine:query:dql">doctrine.query_dql_command</argument>
-        <argument key="doctrine:query:sql">doctrine.query_sql_command</argument>
-        <argument key="doctrine:schema:update">doctrine.schema_update_command</argument>
-        <argument key="doctrine:schema:validate">doctrine.schema_validate_command</argument>
-        <argument key="fos:user:activate">fos_user.command.activate_user</argument>
-        <argument key="fos:user:change-password">fos_user.command.change_password</argument>
-        <argument key="fos:user:create">fos_user.command.create_user</argument>
-        <argument key="fos:user:deactivate">fos_user.command.deactivate_user</argument>
-        <argument key="fos:user:demote">fos_user.command.demote_user</argument>
-        <argument key="fos:user:promote">fos_user.command.promote_user</argument>
-        <argument key="security:check">sensio_distribution.security_checker.command</argument>
-        <argument key="doctrine:fixtures:load">doctrine.fixtures_load_command</argument>
-        <argument key="server:run">web_server.command.server_run</argument>
-        <argument key="server:start">web_server.command.server_start</argument>
-        <argument key="server:stop">web_server.command.server_stop</argument>
-        <argument key="server:status">web_server.command.server_status</argument>
-        <argument key="server:log">web_server.command.server_log</argument>
-      </argument>
-    </service>
-    <service id="service_locator.awtor3q" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="console.command.about" type="service" id="console.command.about"/>
-        <argument key="console.command.assets_install" type="service" id="console.command.assets_install"/>
-        <argument key="console.command.cache_clear" type="service" id="console.command.cache_clear"/>
-        <argument key="console.command.cache_pool_clear" type="service" id="console.command.cache_pool_clear"/>
-        <argument key="console.command.cache_pool_prune" type="service" id="console.command.cache_pool_prune"/>
-        <argument key="console.command.cache_warmup" type="service" id="console.command.cache_warmup"/>
-        <argument key="console.command.config_debug" type="service" id="console.command.config_debug"/>
-        <argument key="console.command.config_dump_reference" type="service" id="console.command.config_dump_reference"/>
-        <argument key="console.command.container_debug" type="service" id="console.command.container_debug"/>
-        <argument key="console.command.debug_autowiring" type="service" id="console.command.debug_autowiring"/>
-        <argument key="console.command.event_dispatcher_debug" type="service" id="console.command.event_dispatcher_debug"/>
-        <argument key="console.command.form_debug" type="service" id="console.command.form_debug"/>
-        <argument key="console.command.router_debug" type="service" id="console.command.router_debug"/>
-        <argument key="console.command.router_match" type="service" id="console.command.router_match"/>
-        <argument key="console.command.translation_debug" type="service" id="console.command.translation_debug"/>
-        <argument key="console.command.translation_update" type="service" id="console.command.translation_update"/>
-        <argument key="console.command.xliff_lint" type="service" id="console.command.xliff_lint"/>
-        <argument key="console.command.yaml_lint" type="service" id="console.command.yaml_lint"/>
-        <argument key="doctrine.cache_clear_metadata_command" type="service" id="doctrine.cache_clear_metadata_command"/>
-        <argument key="doctrine.cache_clear_query_cache_command" type="service" id="doctrine.cache_clear_query_cache_command"/>
-        <argument key="doctrine.cache_clear_result_command" type="service" id="doctrine.cache_clear_result_command"/>
-        <argument key="doctrine.cache_collection_region_command" type="service" id="doctrine.cache_collection_region_command"/>
-        <argument key="doctrine.clear_entity_region_command" type="service" id="doctrine.clear_entity_region_command"/>
-        <argument key="doctrine.clear_query_region_command" type="service" id="doctrine.clear_query_region_command"/>
-        <argument key="doctrine.database_create_command" type="service" id="doctrine.database_create_command"/>
-        <argument key="doctrine.database_drop_command" type="service" id="doctrine.database_drop_command"/>
-        <argument key="doctrine.database_import_command" type="service" id="doctrine.database_import_command"/>
-        <argument key="doctrine.ensure_production_settings_command" type="service" id="doctrine.ensure_production_settings_command"/>
-        <argument key="doctrine.fixtures_load_command" type="service" id="doctrine.fixtures_load_command"/>
-        <argument key="doctrine.generate_entities_command" type="service" id="doctrine.generate_entities_command"/>
-        <argument key="doctrine.mapping_convert_command" type="service" id="doctrine.mapping_convert_command"/>
-        <argument key="doctrine.mapping_import_command" type="service" id="doctrine.mapping_import_command"/>
-        <argument key="doctrine.mapping_info_command" type="service" id="doctrine.mapping_info_command"/>
-        <argument key="doctrine.query_dql_command" type="service" id="doctrine.query_dql_command"/>
-        <argument key="doctrine.query_sql_command" type="service" id="doctrine.query_sql_command"/>
-        <argument key="doctrine.schema_create_command" type="service" id="doctrine.schema_create_command"/>
-        <argument key="doctrine.schema_drop_command" type="service" id="doctrine.schema_drop_command"/>
-        <argument key="doctrine.schema_update_command" type="service" id="doctrine.schema_update_command"/>
-        <argument key="doctrine.schema_validate_command" type="service" id="doctrine.schema_validate_command"/>
-        <argument key="fos_user.command.activate_user" type="service" id="fos_user.command.activate_user"/>
-        <argument key="fos_user.command.change_password" type="service" id="fos_user.command.change_password"/>
-        <argument key="fos_user.command.create_user" type="service" id="fos_user.command.create_user"/>
-        <argument key="fos_user.command.deactivate_user" type="service" id="fos_user.command.deactivate_user"/>
-        <argument key="fos_user.command.demote_user" type="service" id="fos_user.command.demote_user"/>
-        <argument key="fos_user.command.promote_user" type="service" id="fos_user.command.promote_user"/>
-        <argument key="security.command.user_password_encoder" type="service" id="security.command.user_password_encoder"/>
-        <argument key="sensio_distribution.security_checker.command" type="service" id="sensio_distribution.security_checker.command"/>
-        <argument key="twig.command.debug" type="service" id="twig.command.debug"/>
-        <argument key="twig.command.lint" type="service" id="twig.command.lint"/>
-        <argument key="web_server.command.server_log" type="service" id="web_server.command.server_log"/>
-        <argument key="web_server.command.server_run" type="service" id="web_server.command.server_run"/>
-        <argument key="web_server.command.server_start" type="service" id="web_server.command.server_start"/>
-        <argument key="web_server.command.server_status" type="service" id="web_server.command.server_status"/>
-        <argument key="web_server.command.server_stop" type="service" id="web_server.command.server_stop"/>
-      </argument>
-    </service>
     <service id="service_locator.yepb.pt" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -5324,6 +5192,124 @@
         <argument key="validator.expression" type="service" id="validator.expression"/>
       </argument>
     </service>
+    <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
+      <argument type="service" id="service_locator.awtor3q"/>
+      <argument type="collection">
+        <argument key="about">console.command.about</argument>
+        <argument key="assets:install">console.command.assets_install</argument>
+        <argument key="cache:clear">console.command.cache_clear</argument>
+        <argument key="cache:pool:clear">console.command.cache_pool_clear</argument>
+        <argument key="cache:pool:prune">console.command.cache_pool_prune</argument>
+        <argument key="cache:warmup">console.command.cache_warmup</argument>
+        <argument key="debug:config">console.command.config_debug</argument>
+        <argument key="config:dump-reference">console.command.config_dump_reference</argument>
+        <argument key="debug:container">console.command.container_debug</argument>
+        <argument key="debug:autowiring">console.command.debug_autowiring</argument>
+        <argument key="debug:event-dispatcher">console.command.event_dispatcher_debug</argument>
+        <argument key="debug:router">console.command.router_debug</argument>
+        <argument key="router:match">console.command.router_match</argument>
+        <argument key="debug:translation">console.command.translation_debug</argument>
+        <argument key="translation:update">console.command.translation_update</argument>
+        <argument key="lint:xliff">console.command.xliff_lint</argument>
+        <argument key="lint:yaml">console.command.yaml_lint</argument>
+        <argument key="debug:form">console.command.form_debug</argument>
+        <argument key="security:encode-password">security.command.user_password_encoder</argument>
+        <argument key="debug:twig">twig.command.debug</argument>
+        <argument key="lint:twig">twig.command.lint</argument>
+        <argument key="doctrine:database:create">doctrine.database_create_command</argument>
+        <argument key="doctrine:database:drop">doctrine.database_drop_command</argument>
+        <argument key="doctrine:generate:entities">doctrine.generate_entities_command</argument>
+        <argument key="doctrine:mapping:import">doctrine.mapping_import_command</argument>
+        <argument key="doctrine:cache:clear-metadata">doctrine.cache_clear_metadata_command</argument>
+        <argument key="doctrine:cache:clear-query">doctrine.cache_clear_query_cache_command</argument>
+        <argument key="doctrine:cache:clear-result">doctrine.cache_clear_result_command</argument>
+        <argument key="doctrine:cache:clear-collection-region">doctrine.cache_collection_region_command</argument>
+        <argument key="doctrine:mapping:convert">doctrine.mapping_convert_command</argument>
+        <argument key="doctrine:schema:create">doctrine.schema_create_command</argument>
+        <argument key="doctrine:schema:drop">doctrine.schema_drop_command</argument>
+        <argument key="doctrine:ensure-production-settings">doctrine.ensure_production_settings_command</argument>
+        <argument key="doctrine:cache:clear-entity-region">doctrine.clear_entity_region_command</argument>
+        <argument key="doctrine:database:import">doctrine.database_import_command</argument>
+        <argument key="doctrine:mapping:info">doctrine.mapping_info_command</argument>
+        <argument key="doctrine:cache:clear-query-region">doctrine.clear_query_region_command</argument>
+        <argument key="doctrine:query:dql">doctrine.query_dql_command</argument>
+        <argument key="doctrine:query:sql">doctrine.query_sql_command</argument>
+        <argument key="doctrine:schema:update">doctrine.schema_update_command</argument>
+        <argument key="doctrine:schema:validate">doctrine.schema_validate_command</argument>
+        <argument key="fos:user:activate">fos_user.command.activate_user</argument>
+        <argument key="fos:user:change-password">fos_user.command.change_password</argument>
+        <argument key="fos:user:create">fos_user.command.create_user</argument>
+        <argument key="fos:user:deactivate">fos_user.command.deactivate_user</argument>
+        <argument key="fos:user:demote">fos_user.command.demote_user</argument>
+        <argument key="fos:user:promote">fos_user.command.promote_user</argument>
+        <argument key="security:check">sensio_distribution.security_checker.command</argument>
+        <argument key="doctrine:fixtures:load">doctrine.fixtures_load_command</argument>
+        <argument key="server:run">web_server.command.server_run</argument>
+        <argument key="server:start">web_server.command.server_start</argument>
+        <argument key="server:stop">web_server.command.server_stop</argument>
+        <argument key="server:status">web_server.command.server_status</argument>
+        <argument key="server:log">web_server.command.server_log</argument>
+      </argument>
+    </service>
+    <service id="service_locator.awtor3q" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="console.command.about" type="service" id="console.command.about"/>
+        <argument key="console.command.assets_install" type="service" id="console.command.assets_install"/>
+        <argument key="console.command.cache_clear" type="service" id="console.command.cache_clear"/>
+        <argument key="console.command.cache_pool_clear" type="service" id="console.command.cache_pool_clear"/>
+        <argument key="console.command.cache_pool_prune" type="service" id="console.command.cache_pool_prune"/>
+        <argument key="console.command.cache_warmup" type="service" id="console.command.cache_warmup"/>
+        <argument key="console.command.config_debug" type="service" id="console.command.config_debug"/>
+        <argument key="console.command.config_dump_reference" type="service" id="console.command.config_dump_reference"/>
+        <argument key="console.command.container_debug" type="service" id="console.command.container_debug"/>
+        <argument key="console.command.debug_autowiring" type="service" id="console.command.debug_autowiring"/>
+        <argument key="console.command.event_dispatcher_debug" type="service" id="console.command.event_dispatcher_debug"/>
+        <argument key="console.command.form_debug" type="service" id="console.command.form_debug"/>
+        <argument key="console.command.router_debug" type="service" id="console.command.router_debug"/>
+        <argument key="console.command.router_match" type="service" id="console.command.router_match"/>
+        <argument key="console.command.translation_debug" type="service" id="console.command.translation_debug"/>
+        <argument key="console.command.translation_update" type="service" id="console.command.translation_update"/>
+        <argument key="console.command.xliff_lint" type="service" id="console.command.xliff_lint"/>
+        <argument key="console.command.yaml_lint" type="service" id="console.command.yaml_lint"/>
+        <argument key="doctrine.cache_clear_metadata_command" type="service" id="doctrine.cache_clear_metadata_command"/>
+        <argument key="doctrine.cache_clear_query_cache_command" type="service" id="doctrine.cache_clear_query_cache_command"/>
+        <argument key="doctrine.cache_clear_result_command" type="service" id="doctrine.cache_clear_result_command"/>
+        <argument key="doctrine.cache_collection_region_command" type="service" id="doctrine.cache_collection_region_command"/>
+        <argument key="doctrine.clear_entity_region_command" type="service" id="doctrine.clear_entity_region_command"/>
+        <argument key="doctrine.clear_query_region_command" type="service" id="doctrine.clear_query_region_command"/>
+        <argument key="doctrine.database_create_command" type="service" id="doctrine.database_create_command"/>
+        <argument key="doctrine.database_drop_command" type="service" id="doctrine.database_drop_command"/>
+        <argument key="doctrine.database_import_command" type="service" id="doctrine.database_import_command"/>
+        <argument key="doctrine.ensure_production_settings_command" type="service" id="doctrine.ensure_production_settings_command"/>
+        <argument key="doctrine.fixtures_load_command" type="service" id="doctrine.fixtures_load_command"/>
+        <argument key="doctrine.generate_entities_command" type="service" id="doctrine.generate_entities_command"/>
+        <argument key="doctrine.mapping_convert_command" type="service" id="doctrine.mapping_convert_command"/>
+        <argument key="doctrine.mapping_import_command" type="service" id="doctrine.mapping_import_command"/>
+        <argument key="doctrine.mapping_info_command" type="service" id="doctrine.mapping_info_command"/>
+        <argument key="doctrine.query_dql_command" type="service" id="doctrine.query_dql_command"/>
+        <argument key="doctrine.query_sql_command" type="service" id="doctrine.query_sql_command"/>
+        <argument key="doctrine.schema_create_command" type="service" id="doctrine.schema_create_command"/>
+        <argument key="doctrine.schema_drop_command" type="service" id="doctrine.schema_drop_command"/>
+        <argument key="doctrine.schema_update_command" type="service" id="doctrine.schema_update_command"/>
+        <argument key="doctrine.schema_validate_command" type="service" id="doctrine.schema_validate_command"/>
+        <argument key="fos_user.command.activate_user" type="service" id="fos_user.command.activate_user"/>
+        <argument key="fos_user.command.change_password" type="service" id="fos_user.command.change_password"/>
+        <argument key="fos_user.command.create_user" type="service" id="fos_user.command.create_user"/>
+        <argument key="fos_user.command.deactivate_user" type="service" id="fos_user.command.deactivate_user"/>
+        <argument key="fos_user.command.demote_user" type="service" id="fos_user.command.demote_user"/>
+        <argument key="fos_user.command.promote_user" type="service" id="fos_user.command.promote_user"/>
+        <argument key="security.command.user_password_encoder" type="service" id="security.command.user_password_encoder"/>
+        <argument key="sensio_distribution.security_checker.command" type="service" id="sensio_distribution.security_checker.command"/>
+        <argument key="twig.command.debug" type="service" id="twig.command.debug"/>
+        <argument key="twig.command.lint" type="service" id="twig.command.lint"/>
+        <argument key="web_server.command.server_log" type="service" id="web_server.command.server_log"/>
+        <argument key="web_server.command.server_run" type="service" id="web_server.command.server_run"/>
+        <argument key="web_server.command.server_start" type="service" id="web_server.command.server_start"/>
+        <argument key="web_server.command.server_status" type="service" id="web_server.command.server_status"/>
+        <argument key="web_server.command.server_stop" type="service" id="web_server.command.server_stop"/>
+      </argument>
+    </service>
     <service id="cache.app.recorder_inner" class="Symfony\Component\Cache\Adapter\FilesystemAdapter" public="false">
       <argument>WCtRDpxrnj</argument>
       <argument>0</argument>
@@ -5431,6 +5417,7 @@
     <service id="Symfony\Component\Security\Guard\GuardAuthenticatorHandler" alias="security.authentication.guard_handler" public="false"/>
     <service id="security.firewall" alias="debug.security.firewall"/>
     <service id="security.user.provider.concrete.fos_userbundle" alias="fos_user.user_provider.username_email" public="false"/>
+    <service id="security.authentication.session_strategy.main" alias="security.authentication.session_strategy"/>
     <service id="security.user_checker.main" alias="security.user_checker" public="false"/>
     <service id="Symfony\Component\Security\Core\User\UserCheckerInterface" alias="security.user_checker" public="false"/>
     <service id="Twig_Environment" alias="twig" public="false"/>
@@ -5477,10 +5464,6 @@
     <service id="fos_user.user_manager" alias="fos_user.user_manager.default" public="true"/>
     <service id="fos_user.mailer" alias="fos_user.mailer.twig_swift"/>
     <service id="fos_user.session" alias="session" public="false"/>
-    <service id="console.command.doctrine_bundle_doctrinecachebundle_command_containscommand" alias="doctrine_cache.contains_command" public="true"/>
-    <service id="console.command.doctrine_bundle_doctrinecachebundle_command_deletecommand" alias="doctrine_cache.delete_command" public="true"/>
-    <service id="console.command.doctrine_bundle_doctrinecachebundle_command_flushcommand" alias="doctrine_cache.flush_command" public="true"/>
-    <service id="console.command.doctrine_bundle_doctrinecachebundle_command_statscommand" alias="doctrine_cache.stats_command" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="service_locator._fpuy7b" alias="2_ServiceLocator~kqdo.6x" public="false"/>
@@ -5492,5 +5475,9 @@
     <service id="controller_resolver" alias="debug.controller_resolver" public="false"/>
     <service id="argument_resolver" alias="debug.argument_resolver" public="false"/>
     <service id="security.access.decision_manager" alias="debug.security.access.decision_manager" public="false"/>
+    <service id="console.command.doctrine_bundle_doctrinecachebundle_command_containscommand" alias="doctrine_cache.contains_command" public="true"/>
+    <service id="console.command.doctrine_bundle_doctrinecachebundle_command_deletecommand" alias="doctrine_cache.delete_command" public="true"/>
+    <service id="console.command.doctrine_bundle_doctrinecachebundle_command_flushcommand" alias="doctrine_cache.flush_command" public="true"/>
+    <service id="console.command.doctrine_bundle_doctrinecachebundle_command_statscommand" alias="doctrine_cache.stats_command" public="true"/>
   </services>
 </container>

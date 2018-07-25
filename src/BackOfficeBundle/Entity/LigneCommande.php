@@ -37,13 +37,13 @@ class LigneCommande
 
     /**
     * @ORM\ManyToOne(targetEntity="BackOfficeBundle\Entity\Commande",cascade={"remove"})
-    * @ORM\JoinColumn(name="id_commande")
+    * @ORM\JoinColumn(name="id_commande",onDelete="CASCADE")
     */
     private $commande;
 
     /**
-    * @ORM\ManyToOne(targetEntity="BackOfficeBundle\Entity\Produit")
-    * @ORM\JoinColumn(name="id_produit")
+    * @ORM\ManyToOne(targetEntity="BackOfficeBundle\Entity\Produit",cascade={"remove"})
+    * @ORM\JoinColumn(name="id_produit",onDelete="CASCADE")
     */
     private $produit;
 

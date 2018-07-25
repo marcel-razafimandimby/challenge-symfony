@@ -42,10 +42,12 @@ class ProduitType extends AbstractType
             'label'=>"form.label.description"
         ))
         ->add('marque',null,array(
-            'label'=>"form.label.marque"
+            'label'=>"form.label.marque",
+            'required'=>true
         ))
         ->add('qtt',null,array(
-            'label'=>"form.label.qtt"
+            'label'=>"form.label.qtt",
+            'required'=>true
         ))
         ->add('prixTtc',null,array(
             'label'=>"form.label.prixTtc"

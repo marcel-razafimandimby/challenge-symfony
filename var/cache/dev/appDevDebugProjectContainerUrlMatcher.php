@@ -138,6 +138,16 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
                 return array (  '_controller' => 'MainBundle\\Controller\\FicheController::panierAction',  '_route' => 'main_panierpage',);
             }
 
+            // main_panierpage_ajout
+            if (preg_match('#^/lunette/(?P<id>[^/]++)/ajout\\-panier\\.html$#sD', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'main_panierpage_ajout')), array (  '_controller' => 'MainBundle\\Controller\\FicheController::panierAddAction',));
+            }
+
+            // main_panierpage_delete
+            if (preg_match('#^/lunette/(?P<id>[^/]++)/delete\\-panier\\.html$#sD', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'main_panierpage_delete')), array (  '_controller' => 'MainBundle\\Controller\\FicheController::panierDeleteAction',));
+            }
+
             // main_validerCommandepage
             if ('/lunette/valider-commande.html' === $pathinfo) {
                 return array (  '_controller' => 'MainBundle\\Controller\\FicheController::validerCommandeAction',  '_route' => 'main_validerCommandepage',);

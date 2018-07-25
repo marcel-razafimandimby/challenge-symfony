@@ -123,6 +123,8 @@ class CommandeController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($commande);
             $em->flush();
+
+            $this->get('common.flashBag')->add('success_delete');
         }
 
         return $this->redirectToRoute('backoffice_commande_index');

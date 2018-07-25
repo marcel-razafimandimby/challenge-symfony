@@ -20,13 +20,14 @@ class FicheController extends Controller
     public function ficheAction(Produit $produit)
     {
         $em = $this->getDoctrine()->getManager();
-        
+        /** @var ArrayCollection|Produit[] $autresProduits */
         $autresProduits = $em->getRepository(Produit::class)->getOtherProduct($produit);
 
         return $this->render('@Main/Fiche/fiche.html.twig',array(
             'produit' => $produit,
             'autresProduits'=>$autresProduits
         ));
+        
     }
 
     /**
@@ -34,10 +35,10 @@ class FicheController extends Controller
     * @param Produit $produit,Request $request
     * @return view inscription
     */
-    public function inscriptionAction(Produit $produit,Request $request)
+    public function inscriptionAction(Produit $produit, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        
+        /** @var ArrayCollection|Produit[] $autresProduits */
         $autresProduits = $em->getRepository(Produit::class)->getOtherProduct($produit);
 
         $client = new Client();
@@ -62,8 +63,8 @@ class FicheController extends Controller
         $session = $this->get('session');
         $monPanier = $session->get('monPanier');
 
-        //Recuperer le produit dans le panier
         $em = $this->getDoctrine()->getManager();
+        /** @var ArrayCollection|Produit[] $produitPanier*/
         $produitPanier = $em->getRepository('BackOfficeBundle:Produit')->getProductPanier($monPanier);
         
         $client = new Client();
@@ -92,7 +93,7 @@ class FicheController extends Controller
     * @param $id produit
     * @return redirectToRoute main_panierpage
     */
-    public function panierAddAction($id,Request $request)
+    public function panierAddAction($id, Request $request)
     {
         $addProduitPanier = $this->get('main.panier')->addProduit($id,$request);
 
